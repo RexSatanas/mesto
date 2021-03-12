@@ -1,0 +1,13 @@
+.element {
+    width: 282px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: white;
+    margin-right: 17px;
+    margin-top: 0;
+}
+
+.element:nth-child(3n) {
+    margin-right: 0;
+}
