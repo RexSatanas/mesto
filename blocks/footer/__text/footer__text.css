@@ -5,5 +5,10 @@
     font-size: 18px;
     line-height: 22px;
     color: #8d8c8c;
+}
 
+@media screen and (max-width:320px) {
+    .footer__text {
+        max-width: 282px;
+    }
 }

@@ -1,0 +1,12 @@
+.popup__status {
+    width: 358px;
+    margin: 30px auto 0;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+@media screen and (max-width:320px) {
+    .popup__status {
+        width: 238px;
+    }
+}
