@@ -1,4 +1,4 @@
-.profile__info_status {
+.profile__info-status {
     margin: 16px 0 0 0;
     font-style: normal;
     font-weight: normal;
@@ -8,7 +8,7 @@
 }
 
 @media screen and (min-width:320px) and (max-width:760px) {
-    .profile__info_status {
+    .profile__info-status {
     font-size: 14px;
     line-height: 17px;
     text-align: center;
