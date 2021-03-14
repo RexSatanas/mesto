@@ -1,7 +1,12 @@
 .profile__info-editbutton {
     width: 24px;
-    margin-top: 22px;
+    margin-top: 37px;
     cursor: pointer;
+    background-color: black;
+    background-image: url(../../../images/Edit\ Button.svg);
+    background-repeat: no-repeat;
+    border: 0;
+    outline: none;
 }
 
 .profile__info-editbutton:hover {

@@ -1,5 +1,6 @@
 .popup__save-btn {
     width: 358px;
+    border: none;
     border-radius: 2px;
     background-color: black;
     display: flex;
@@ -7,6 +8,7 @@
     align-items: center;
     margin: 48px auto 37px;
     cursor: pointer;
+    outline: none;
 }
 
 .popup__save-btn:hover {
