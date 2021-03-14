@@ -1,7 +1,7 @@
-.element__like {
+.element__like_active {
     width: 22px;
     margin-top: 5px;
-    background-image: url(../../../../images/likebtn.svg);
+    background-image: url(../../../../images/likebtnBlk.svg);
     background-repeat: no-repeat;
     cursor: pointer;
 }
