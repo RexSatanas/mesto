@@ -1,12 +1,15 @@
 let popup = document.querySelector('.popup');
 let openPopupBtn = document.querySelector('.open_popup_btn');
 let closePopupBtn = document.querySelector('.popup__close-btn');
-let formElement = document.queryCommandValue('.popup__save-btn')
+let formElement = document.querySelector('.popup__save-btn')
 let profileName = document.querySelector('.profile__info-name');
 let profileStatus = document.querySelector('.profile__info-status');
 let nameInput = document.querySelector('.popup__name')
 let statusInput = document.querySelector('.popup__status');
 
+openPopupBtn.addEventListener('click', openPopup);
+closePopupBtn.addEventListener('click', closePopup);
+formElement.addEventListener('submit', formSubmitHandler);
 
 
 function openPopup() {
@@ -21,11 +24,10 @@ function closePopup() {
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
-    profileName.textContent(nameInput.value);
-    closePopup();
+    profileName.textContent = nameInput.value;
+    profileStatus.textContent = statusInput.value;
+    closePopup(); 
 }
 
-openPopupBtn.addEventListener('click', function() {openPopup();});
-closePopupBtn.addEventListener('click', function() {closePopup();});
-formElement.addEventListener('submit', formSubmitHandler());
+
 
