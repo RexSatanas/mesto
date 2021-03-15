@@ -1,14 +1,15 @@
 .popup__save-btn {
+    margin: 61px auto 37px;
+    padding: 0;
     width: 358px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
     border: none;
-    border-radius: 2px;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 48px auto 37px;
-    cursor: pointer;
     outline: none;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 22px;
 }
 
 .popup__save-btn:hover {
