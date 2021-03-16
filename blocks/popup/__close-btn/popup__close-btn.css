@@ -1,12 +1,22 @@
 .popup__close-btn {
-    font-size: 80px;
-    transform: rotate(-45deg);
     position: absolute;
     right: -40px;
-    top: -70px;
-    color: white;
+    top: -50px;
+    background-image: url(../../../images/CloseIcon.svg);
+    background-color: black;
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
     cursor: pointer;
 }
+
+
+.popup__close-btn:hover {
+    transition-duration: 1s;
+    opacity: 0.6;
+}
+
 
 @media screen and (min-width:320px) and (max-width:760px) {
     .popup__close-btn {

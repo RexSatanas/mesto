@@ -1,4 +1,4 @@
-.profile__addButton {
+.profile__addbutton {
     width: 150px;
     margin-top: 35px;
     cursor: pointer;
@@ -9,13 +9,13 @@
     outline: none;
 }
 
-.profile__addButton:hover {
+.profile__addbutton:hover {
     transition-duration: 1s;
     opacity: 0.6;
 }
 
 @media screen and (min-width:320px) and (max-width:760px) {
-    .profile__addButton {
+    .profile__addbutton {
         background-image: url(../../../images/Add\ ButtonSmall.svg);
         width: 282px;
         height: 50px;

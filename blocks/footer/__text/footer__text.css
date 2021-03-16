@@ -1,5 +1,6 @@
 .footer__text {
-    width: 318px;
+    margin: 0;
+    max-width: 318px;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -9,6 +10,9 @@
 
 @media screen and (max-width:320px) {
     .footer__text {
+        font-size: 14px;
+        line-height: 17px;
+        color: #545454;
         max-width: 282px;
     }
 }

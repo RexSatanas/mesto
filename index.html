@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./vendors/normalize.css">
     <link rel="stylesheet" href="./pages/index.css">
     <title>Mесто</title>
 </head>
@@ -17,53 +16,53 @@
                 <img class="profile__avatar" src="./images/avatarka.png" alt="аватарка">    
                 <div class="profile__info">
                     <h1 class="profile__info-name">Жак-Ив Кусто</h1>
-                    <button type="button" class="profile__info-editbutton"></button>
-                    <p class="profile__info-status">Исследователь океана</p>
+                    <button type="button" class="profile__info-edit-button"></button>
+                    <h2 class="profile__info-status">Исследователь океана</h2>
                  </div>
             </div>
-            <button type="button" class="profile__addButton"></button>
+            <button type="button" class="profile__addbutton"></button>
         </section>
         <section class="elements">
             <div class="element">
                 <img class="element__image" src="./images/kirill-pershin-1088404-unsplash.png" alt="Гора Эльбрус">
                 <div class="element__box">
-                    <p class="element__name">Гора Эльбрус</p>
-                    <button type="button" class="element__like element__like_active"></button>
+                    <h2 class="element__name">Гора Эльбрус</h2>
+                    <button type="button" class="element__like"></button>
                 </div>        
             </div>
             <div class="element">
                 <img class="element__image" src="./images/kirill-pershin-1404681-unsplash.png" alt="Карачевск">
                 <div class="element__box">
-                    <p class="element__name">Карачевск</p>
-                    <button type="button" class="element__like element__like_active"></button>
+                    <h2 class="element__name">Карачевск</h2>
+                    <button type="button" class="element__like"></button>
                 </div>        
             </div>
             <div class="element">
                 <img class="element__image" src="./images/kirill-pershin-1556355-unsplash.png" alt="Домбай">
                 <div class="element__box">
-                    <p class="element__name">Домбай</p>
-                    <button type="button" class="element__like element__like_active"></button>
+                    <h2 class="element__name">Домбай</h2>
+                    <button type="button" class="element__like"></button>
                 </div>        
             </div>
             <div class="element">
                 <img class="element__image" src="./images/kirill-pershin-1088404-unsplash.png" alt="Гора Эльбрус">
                 <div class="element__box">
-                    <p class="element__name">Гора Эльбрус</p>
-                    <button type="button" class="element__like element__like_active"></button>
+                    <h2 class="element__name">Гора Эльбрус</h2>
+                    <button type="button" class="element__like"></button>
                 </div>        
             </div>
             <div class="element">
                 <img class="element__image" src="./images/kirill-pershin-1404681-unsplash.png" alt="Карачевск">
                 <div class="element__box">
-                    <p class="element__name">Карачевск</p>
-                    <button class="element__like element__like_active"></button>
+                    <h2 class="element__name">Карачевск</h2>
+                    <button class="element__like"></button>
                 </div>        
             </div>
             <div class="element">
                 <img class="element__image" src="./images/kirill-pershin-1556355-unsplash.png" alt="Домбай">
                 <div class="element__box">
-                    <p class="element__name">Домбай</p>
-                    <button type="button" class="element__like element__like_active"></button>
+                    <h2 class="element__name">Домбай</h2>
+                    <button type="button" class="element__like"></button>
                 </div>        
             </div>
         </section>
@@ -72,15 +71,29 @@
         <p class="footer__text">© 2020 Mesto Russia</p>
     </footer>
     <div class="popup">
-        <form class="popup__container">
-            <div class="popup__close-btn">+</div>
+        <div class="popup__container">
+            <button class="popup__close-btn"></button>
+            <form name="profile-info" class="profile__form">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <input class="popup__name" type="text" size="14">
-            <input class="popup__status" type="text" size="14">
+            <input id="name" class="popup__input" type="text">
+            <input id="status" class="popup__input popup__input_status" type="text">
             <button type="submit" class="popup__save-btn">Сохранить</button>
-        </form>
+            </form>
+        </div>
     </div>
     <script src="./scripts/index.js"></script>
 </body>
 
 </html>
+
+<div class="popup">
+    <div class="popup__container">
+       <button class="popup__button-close"></button>
+       <form name="edit-profile" class="form">
+           <h2 class=""></h2>
+           <input>
+           <input>
+           <button type="submit"></button>
+       </form>
+   </div>
+</div> 
