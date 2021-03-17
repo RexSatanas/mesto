@@ -3,7 +3,8 @@
     right: -40px;
     top: -50px;
     background-image: url(../../../images/CloseIcon.svg);
-    background-color: black;
+    background-color: transparent;
+    background-repeat: no-repeat;
     width: 50px;
     height: 50px;
     border: none;
@@ -20,8 +21,10 @@
 
 @media screen and (min-width:320px) and (max-width:760px) {
     .popup__close-btn {
-        font-size: 60px;
-        top: -65px;
+        background-image: url(../../../images/CloseIconSmall.svg);
+        width: 30px;
+        height: 30px;
+        top: -40px;
         right: 0px;
     }
 }
