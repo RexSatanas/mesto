@@ -1,11 +1,11 @@
-let popup = document.querySelector('.popup');
-let openPopupBtn = document.querySelector('.profile__info-edit-button');
-let closePopupBtn = document.querySelector('.popup__close-btn');
-let formElement = document.querySelector('.popup__form');
-let profileName = document.querySelector('.profile__info-name');
-let profileStatus = document.querySelector('.profile__info-status');
-let nameInput = document.getElementById('name');
-let statusInput = document.getElementById('status');
+const popup = document.querySelector('.popup_edit');
+const openPopupBtn = document.querySelector('.profile__info-edit-button');
+const closePopupBtn = document.querySelector('.popup__close-btn');
+const formElement = document.querySelector('.popup__form');
+const profileName = document.querySelector('.profile__info-name');
+const profileStatus = document.querySelector('.profile__info-status');
+const nameInput = document.getElementById('name');
+const statusInput = document.getElementById('status');
 
 
 function openPopup() {
@@ -28,5 +28,4 @@ function formSubmitHandler (evt) {
 openPopupBtn.addEventListener('click', openPopup);
 closePopupBtn.addEventListener('click', closePopup);
 formElement.addEventListener('submit', formSubmitHandler);
-
 
