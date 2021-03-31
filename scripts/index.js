@@ -31,10 +31,10 @@ function closePopup(popup) {
 function openEditPopup() {
      nameInput.value = profileName.textContent;
      statusInput.value = profileStatus.textContent;
-     openPopup(popupEdit)
+     openPopup(popupEdit);
 }
 
-function HandlerformSubmit (evt) {
+function handlerformSubmit (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileStatus.textContent = statusInput.value;
@@ -80,12 +80,12 @@ function renderList() {
 
 renderList();
 
-function HandlerformAddSubmit(evt) {
+function handlerformAddSubmit(evt) {
     evt.preventDefault();
     const card = createCard({name: placeInput.value, link: linkInput.value});
     elementContainer.prepend(card);
     closePopup(addPopup);
-    formAddPopup.reset()
+    formAddPopup.reset();
 }
 
 function openFullImg(link, alt) {
@@ -98,7 +98,7 @@ function openFullImg(link, alt) {
 imageElementClose.addEventListener('click', () => closePopup(imageModalWindow));
 openAddBtn.addEventListener('click', ()=> openPopup(addPopup));
 closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
-formAddPopup.addEventListener('submit', HandlerformAddSubmit);
+formAddPopup.addEventListener('submit', handlerformAddSubmit);
 openPopupBtn.addEventListener('click', openEditPopup);
 closePopupBtn.addEventListener('click', () => closePopup(popupEdit));
-formElement.addEventListener('submit', HandlerformSubmit);
+formElement.addEventListener('submit', handlerformSubmit);
