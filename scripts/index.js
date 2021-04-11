@@ -20,6 +20,7 @@ const elementContainer = document.querySelector('.elements');
 const cardTemplate = document.getElementById('card-template').content;
 
 
+
 function openPopup(popup) {
     popup.classList.add('popup_opened');
 }
@@ -77,7 +78,6 @@ function renderList() {
     });
     elementContainer.append(...data);
 }
-
 renderList();
 
 function handleAddCardFormSubmit(evt) {
