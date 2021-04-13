@@ -43,10 +43,10 @@ function setSubmitButtonState(form) {
     if (isValid) {
         button.removeAttribute('disabled');
         button.classList.add('popup__save-btn_valid');
-        button.classList.remove('popup__button_invalid');
+        button.classList.remove('popup__save-btn_invalid');
     } else {
         button.setAttribute('disabled', true);
-        button.classList.remove('popup__button_valid');
-        button.classList.add('popup__button_invalid');
+        button.classList.remove('popup__save-btn_valid');
+        button.classList.add('popup__save-btn_invalid');
     }
 }

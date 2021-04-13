@@ -21,12 +21,29 @@ const cardTemplate = document.getElementById('card-template').content;
 
 
 
+
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', closePopupByEsc);
 }
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closePopupByEsc);
+}
+
+function closePopupByEsc(evt) {
+    if(evt.key === 'Escape') {
+        const popup = document.querySelector('.popup_opened');
+        closePopup(popup);
+    }
+}
+
+function closePopupByClick(evt) {
+    if(evt.target.classList.contains('popup')) {
+        const popup = document.querySelector('.popup_opened');
+        closePopup(popup);
+    }
 }
 
 function openEditPopup() {
@@ -93,7 +110,7 @@ function openFullImg(link, alt) {
     imageElementName.textContent = alt;
     openPopup(imageModalWindow);
 }
-
+document.addEventListener('click', closePopupByClick);
 imageElementClose.addEventListener('click', () => closePopup(imageModalWindow));
 openAddBtn.addEventListener('click', ()=> openPopup(addPopup));
 closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
