@@ -1,7 +1,7 @@
 const popupEdit = document.querySelector('.popup_type_edit');
 const openPopupBtn = document.querySelector('.profile__info-edit-button');
 const closePopupBtn = popupEdit.querySelector('.popup__close-btn');
-const formElement = document.querySelector('.popup__form');
+const formEditPopup = document.querySelector('.popup__edit-form');
 const profileName = document.querySelector('.profile__info-name');
 const profileStatus = document.querySelector('.profile__info-status');
 const nameInput = document.getElementById('name');
@@ -30,8 +30,7 @@ function closePopup(popup) {
 }
 
 function openEditPopup() {
-     nameInput.value = profileName.textContent;
-     statusInput.value = profileStatus.textContent;
+    formEditPopup.reset()
      openPopup(popupEdit);
 }
 
@@ -101,4 +100,4 @@ closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
 formAddPopup.addEventListener('submit', handleAddCardFormSubmit);
 openPopupBtn.addEventListener('click', openEditPopup);
 closePopupBtn.addEventListener('click', () => closePopup(popupEdit));
-formElement.addEventListener('submit', handleProfileFormSubmit);
+formEditPopup.addEventListener('submit', handleProfileFormSubmit);
