@@ -1,24 +1,20 @@
-const formNew = document.querySelector('.popup__form[name="profile-info"]');
-const formAdd = document.querySelector('.popup__form[name="add-card"]');
 
+const validateConfig = ({
+    formNew: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: 'popup__save-btn',
+    inactiveButtonClass: '.popup__save-btn_invalid',
+    activeButtonClass: 'popup__save-btn_valid',
+    inputErrorClass: '.popup__input-error',
+})
 
-formNew.addEventListener('submit', handleFormSubmit);
-
-formNew.addEventListener('input', function (event) {
+document.addEventListener('submit', handleFormSubmit);
+document.addEventListener('input', function (event) {
     const input = event.target;
     setFieldError(input);
-    setSubmitButtonState(formNew);
+    setSubmitButtonState(validateConfig.formNew);
 });
 
-formAdd.addEventListener('submit', handleFormSubmit);
-formAdd.addEventListener('input', function (event) {
-    const input = event.target;
-    setFieldError(input);
-    setSubmitButtonState(formAdd);
-});
-
-
-/* Функция-коллбэк, обрабатывающая событие отправки формы. */
 function handleFormSubmit(event) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -36,17 +32,18 @@ function setFieldError(field) {
     span.textContent = field.validationMessage;
 }
 
-function setSubmitButtonState(form) {
-    const button = form.querySelector('.popup__save-btn');
+function setSubmitButtonState(form, validateConfig) {
+    const button = form.querySelector(validateConfig.submitButtonSelector);
     const isValid = form.checkValidity();
 
     if (isValid) {
         button.removeAttribute('disabled');
-        button.classList.add('popup__save-btn_valid');
-        button.classList.remove('popup__save-btn_invalid');
+        button.classList.add(validateConfig.activeButtonClass);
+        button.classList.remove(validateConfig.inactiveButtonClass);
     } else {
         button.setAttribute('disabled', true);
-        button.classList.remove('popup__save-btn_valid');
-        button.classList.add('popup__save-btn_invalid');
+        button.classList.remove(validateConfig.activeButtonClass);
+        button.classList.add(validateConfig.inactiveButtonClass);
     }
 }
+
