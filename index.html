@@ -42,10 +42,10 @@
     <form name="profile-info" action="#" class="popup__form popup__edit-form" novalidate>
         <button type="button" class="popup__close-btn"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input id="name" name="name" class="popup__input popup__input1" type="text" required minlength="2" maxlength="40" placeholder="Имя">
+        <input id="name" name="name" class="popup__input" type="text" required minlength="2" maxlength="40" placeholder="Имя">
         <span class="popup__input-error error1" id="name-error"></span>
-        <input id="status" name="status" class="popup__input" type="text" required minlength="2" maxlength="40" placeholder="О Себе">
-        <span class="popup__input-error error2" id="status-error"></span>
+        <input id="status" name="status" class="popup__input" type="text" required minlength="2" maxlength="200" placeholder="О Себе">
+        <span class="popup__input-error" id="status-error"></span>
         <button id="add-submit-btn" type="submit" class="popup__save-btn popup__save-btn_invalid" disabled>Сохранить</button>
     </form>
 </div>
@@ -54,7 +54,7 @@
         <button id="close-add-popup-btn" type="button" class="popup__close-btn popup__close-btn_add"></button>
         <h2 class="popup__title">Новое место</h2>
         <input id="place" name="place" class="popup__input popup__input_name-place" type="text" required minlength="2" maxlength="30" placeholder="Название">
-        <span class="popup__input-error error1" id="place-error"></span>
+        <span class="popup__input-error" id="place-error"></span>
         <input id="link" name="link" class="popup__input popup__input_link-place" type="url" required  placeholder="Ссылка на картинку">
         <span class="popup__input-error error2" id="link-error"></span>
         <button type="submit" class="popup__save-btn popup__save-btn_invalid" disabled>Создать</button>

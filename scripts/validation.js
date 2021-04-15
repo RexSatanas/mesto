@@ -1,19 +1,15 @@
 
 const validateConfig = ({
-    formNew: '.popup__form',
+    formSelector: '.popup__form',
+    formNew: '.popup__form[name="profile-info"]',
+    formAdd: '.popup__form[name="add-card"]',
     inputSelector: '.popup__input',
-    submitButtonSelector: 'popup__save-btn',
-    inactiveButtonClass: '.popup__save-btn_invalid',
+    submitButtonSelector: '.popup__save-btn',
+    inactiveButtonClass: 'popup__save-btn_invalid',
     activeButtonClass: 'popup__save-btn_valid',
     inputErrorClass: '.popup__input-error',
 })
 
-document.addEventListener('submit', handleFormSubmit);
-document.addEventListener('input', function (event) {
-    const input = event.target;
-    setFieldError(input);
-    setSubmitButtonState(validateConfig.formNew);
-});
 
 function handleFormSubmit(event) {
     event.preventDefault();
@@ -27,15 +23,15 @@ function handleFormSubmit(event) {
     }
 }
 
-function setFieldError(field) {
+function setFieldError() {
+    const field = document.querySelector(validateConfig.inputSelector)
     const span = field.nextElementSibling;
     span.textContent = field.validationMessage;
 }
 
-function setSubmitButtonState(form, validateConfig) {
-    const button = form.querySelector(validateConfig.submitButtonSelector);
-    const isValid = form.checkValidity();
-
+function setSubmitButtonState (event, formElement, validateConfig) {
+    const button = formElement.querySelector(validateConfig.submitButtonSelector);
+    const isValid = event.currentTarget.checkValidity();
     if (isValid) {
         button.removeAttribute('disabled');
         button.classList.add(validateConfig.activeButtonClass);
@@ -43,7 +39,19 @@ function setSubmitButtonState(form, validateConfig) {
     } else {
         button.setAttribute('disabled', true);
         button.classList.remove(validateConfig.activeButtonClass);
-        button.classList.add(validateConfig.inactiveButtonClass);
+        button.classList.add(validateConfig.activeButtonClass);
     }
 }
+
+function enableValidation (event, validateConfig) {
+    const input = event.currentTarget;
+    setFieldError(input);
+    setSubmitButtonState(validateConfig);
+}
+enableValidation(validateConfig)
+
+document.querySelector(validateConfig.formNew).addEventListener('submit', handleFormSubmit);
+document.querySelector(validateConfig.formNew).addEventListener('input', enableValidation)
+document.querySelector(validateConfig.formAdd).addEventListener('submit', handleFormSubmit);
+document.querySelector(validateConfig.formAdd).addEventListener('input', enableValidation)
 
