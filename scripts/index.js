@@ -25,6 +25,7 @@ const cardTemplate = document.getElementById('card-template').content;
 function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupByEsc);
+    clearValidationState(validateConfig);
 }
 
 function closePopup(popup) {
@@ -102,6 +103,7 @@ function handleAddCardFormSubmit(evt) {
     elementContainer.prepend(card);
     closePopup(addPopup);
     formAddPopup.reset();
+    clearValidationState(validateConfig)
 }
 
 function openFullImg(link, alt) {
