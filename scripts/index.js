@@ -1,7 +1,36 @@
+import {Card} from "./Card.js";
+import {FormValidator} from "./FormValidator.js";
+const initialCards = [
+    {
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
+
 const popupEdit = document.querySelector('.popup_type_edit');
 const openPopupBtn = document.querySelector('.profile__info-edit-button');
 const closePopupBtn = popupEdit.querySelector('.popup__close-btn');
-const formEditPopup = document.querySelector('.popup__edit-form');
+export const formEditPopup = document.querySelector('.popup__edit-form');
 const profileName = document.querySelector('.profile__info-name');
 const profileStatus = document.querySelector('.profile__info-status');
 const nameInput = document.getElementById('name');
@@ -9,7 +38,7 @@ const statusInput = document.getElementById('status');
 const addPopup = document.querySelector('.popup_type_add');
 const openAddBtn = document.querySelector('.profile__add-button');
 const closeAddPopupBtn = addPopup.querySelector('.popup__close-btn_add');
-const formAddPopup = addPopup.querySelector('.popup__add-form');
+export const formAddPopup = addPopup.querySelector('.popup__add-form');
 const placeInput = addPopup.querySelector('.popup__input_name-place');
 const linkInput = addPopup.querySelector('.popup__input_link-place');
 const imageModalWindow = document.querySelector('.popup_type_photo');
@@ -17,15 +46,17 @@ const imageElement = imageModalWindow.querySelector('.popup__image');
 const imageElementClose = imageModalWindow.querySelector('.popup__close-btn_img');
 const imageElementName = imageModalWindow.querySelector('.popup__img-title');
 const elementContainer = document.querySelector('.elements');
-const cardTemplate = document.getElementById('card-template').content;
 
-
-
+function render () {
+    initialCards.forEach(({link, name}) => {
+        const cardsArray = new Card({link, name}, '#card-template');
+        elementContainer.append(cardsArray.generateCard());
+    });
+}
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupByEsc);
-    clearValidationState(validateConfig);
 }
 
 function closePopup(popup) {
@@ -47,9 +78,21 @@ function closePopupByClick(evt) {
     }
 }
 
-function openEditPopup() {
-    formEditPopup.reset()
-     openPopup(popupEdit);
+const validateConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__save-btn',
+    inactiveButtonClass: 'popup__save-btn_disable',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-error_visible'
+};
+
+const validateConfigProfile = new FormValidator(validateConfig, formEditPopup)
+const validateConfigCard = new FormValidator(validateConfig, formAddPopup)
+
+function startFormValidation() {
+    validateConfigProfile.enableValidation()
+    validateConfigCard.enableValidation()
 }
 
 function handleProfileFormSubmit(evt) {
@@ -59,64 +102,23 @@ function handleProfileFormSubmit(evt) {
     closePopup(popupEdit);
 }
 
-function deleteCard(evt) {
-    evt.target.closest('.element').remove();
-}
-
-function likeCard(evt) {
-    evt.target.classList.toggle('element__like_active');
-}
-
-function createCard(item) {
-
-    const newElement = cardTemplate.querySelector('.element').cloneNode(true);
-    const cardImage = newElement.querySelector('.element__image');
-    const cardName = newElement.querySelector('.element__name');
-    const cardLikeButton = newElement.querySelector('.element__like');
-    const cardDeleteBtn = newElement.querySelector('.card__del-button');
-
-    cardName.textContent = item.name;
-    cardImage.src = item.link;
-    cardImage.alt = item.name;
-
-
-    cardLikeButton.addEventListener('click', likeCard);
-    cardDeleteBtn.addEventListener('click', deleteCard);
-    cardImage.addEventListener('click', () => openFullImg(item.link, item.name));
-
-
-    return newElement;
-}
-
-function renderList() {
-    const data = initialCards.map(item => {
-        const newElement = createCard(item);
-        return newElement;
-    });
-    elementContainer.append(...data);
-}
-renderList();
-
 function handleAddCardFormSubmit(evt) {
     evt.preventDefault();
-    const card = createCard({name: placeInput.value, link: linkInput.value});
-    elementContainer.prepend(card);
+    const obj = {};
+    obj.link = linkInput.value
+    obj.name = placeInput.value
+    const originalCard = new Card(obj, '#card-template')
+    elementContainer.prepend(originalCard.generateCard())
     closePopup(addPopup);
-    formAddPopup.reset();
-    clearValidationState(validateConfig)
 }
 
-function openFullImg(link, alt) {
-    imageElement.src = link;
-    imageElement.alt = alt;
-    imageElementName.textContent = alt;
-    openPopup(imageModalWindow);
-}
 document.addEventListener('click', closePopupByClick);
 imageElementClose.addEventListener('click', () => closePopup(imageModalWindow));
 openAddBtn.addEventListener('click', ()=> openPopup(addPopup));
 closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
 formAddPopup.addEventListener('submit', handleAddCardFormSubmit);
-openPopupBtn.addEventListener('click', openEditPopup);
+openPopupBtn.addEventListener('click', () => openPopup(popupEdit));
 closePopupBtn.addEventListener('click', () => closePopup(popupEdit));
 formEditPopup.addEventListener('submit', handleProfileFormSubmit);
+render ();
+startFormValidation();
