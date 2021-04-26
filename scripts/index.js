@@ -41,10 +41,10 @@ const closeAddPopupBtn = addPopup.querySelector('.popup__close-btn_add');
 export const formAddPopup = addPopup.querySelector('.popup__add-form');
 const placeInput = addPopup.querySelector('.popup__input_name-place');
 const linkInput = addPopup.querySelector('.popup__input_link-place');
-const imageModalWindow = document.querySelector('.popup_type_photo');
-const imageElement = imageModalWindow.querySelector('.popup__image');
+export const imageModalWindow = document.querySelector('.popup_type_photo');
+export const imageElement = imageModalWindow.querySelector('.popup__image');
 const imageElementClose = imageModalWindow.querySelector('.popup__close-btn_img');
-const imageElementName = imageModalWindow.querySelector('.popup__img-title');
+export const imageElementName = imageModalWindow.querySelector('.popup__img-title');
 const elementContainer = document.querySelector('.elements');
 
 function render () {
@@ -54,7 +54,7 @@ function render () {
     });
 }
 
-function openPopup(popup) {
+export function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupByEsc);
 }

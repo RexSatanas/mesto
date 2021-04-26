@@ -1,3 +1,5 @@
+import {imageElement, imageElementName, imageModalWindow, openPopup} from "./index.js";
+
 export class Card {
     constructor(data, selector) {
         this._selector = selector;
