@@ -59,6 +59,12 @@ export function openPopup(popup) {
     document.addEventListener('keydown', closePopupByEsc);
 }
 
+function openEditPopup() {
+    nameInput.value = profileName.textContent;
+    statusInput.value = profileStatus.textContent;
+    openPopup(popupEdit)
+}
+
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closePopupByEsc);
@@ -117,7 +123,7 @@ imageElementClose.addEventListener('click', () => closePopup(imageModalWindow));
 openAddBtn.addEventListener('click', ()=> openPopup(addPopup));
 closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
 formAddPopup.addEventListener('submit', handleAddCardFormSubmit);
-openPopupBtn.addEventListener('click', () => openPopup(popupEdit));
+openPopupBtn.addEventListener('click', openEditPopup);
 closePopupBtn.addEventListener('click', () => closePopup(popupEdit));
 formEditPopup.addEventListener('submit', handleProfileFormSubmit);
 render ();
