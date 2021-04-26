@@ -10,10 +10,9 @@ export class Card {
         this._like = this._element.querySelector('.element__like');
     }
 
-    _openFullImg(link, alt) { //просмотр картинки
-        imageElement.src = link;
-        imageElement.alt = alt;
-        imageElementName.textContent = alt;
+    _openFullImg(evt) { //просмотр картинки
+        imageElement.src = evt.target.src;
+        imageElementName.textContent = evt.target.alt;
         openPopup(imageModalWindow);
     }
 
