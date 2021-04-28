@@ -122,7 +122,11 @@ function handleAddCardFormSubmit(evt) {
 
 document.addEventListener('click', closePopupByClick);
 imageElementClose.addEventListener('click', () => closePopup(imageModalWindow));
-openAddBtn.addEventListener('click', () => openPopup(addPopup));
+openAddBtn.addEventListener('click', () => {
+    validateConfigCard.clearErrors()
+    openPopup(addPopup)
+    formAddPopup.reset()
+});
 closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
 formAddPopup.addEventListener('submit', handleAddCardFormSubmit);
 openPopupBtn.addEventListener('click', openEditPopup);
