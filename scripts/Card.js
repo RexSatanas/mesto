@@ -47,4 +47,5 @@ export class Card {
         this._element.querySelector('.element__name').textContent = this._name;
         return this._element
     }
+
 }
