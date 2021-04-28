@@ -47,7 +47,7 @@ const imageElementClose = imageModalWindow.querySelector('.popup__close-btn_img'
 export const imageElementName = imageModalWindow.querySelector('.popup__img-title');
 const elementContainer = document.querySelector('.elements');
 
-function render () {
+function renderCards () {
     initialCards.forEach(({link, name}) => {
         const cardsArray = new Card({link, name}, '#card-template');
         elementContainer.append(cardsArray.generateCard());
@@ -84,7 +84,7 @@ function closePopupByClick(evt) {
     }
 }
 
-const validateConfig = {
+export const validateConfig = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__save-btn',
@@ -115,6 +115,7 @@ function handleAddCardFormSubmit(evt) {
     obj.name = placeInput.value
     const originalCard = new Card(obj, '#card-template')
     elementContainer.prepend(originalCard.generateCard())
+    formAddPopup.reset()
     closePopup(addPopup);
 }
 
@@ -123,8 +124,8 @@ imageElementClose.addEventListener('click', () => closePopup(imageModalWindow));
 openAddBtn.addEventListener('click', ()=> openPopup(addPopup));
 closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
 formAddPopup.addEventListener('submit', handleAddCardFormSubmit);
-openPopupBtn.addEventListener('click', openEditPopup);
+openPopupBtn.addEventListener('click', openEditPopup, );
 closePopupBtn.addEventListener('click', () => closePopup(popupEdit));
 formEditPopup.addEventListener('submit', handleProfileFormSubmit);
-render ();
+renderCards ();
 startFormValidation();
