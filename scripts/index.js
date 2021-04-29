@@ -59,12 +59,6 @@ export function openPopup(popup) {
     document.addEventListener('keydown', closePopupByEsc);
 }
 
-function openEditPopup() {
-    nameInput.value = profileName.textContent;
-    statusInput.value = profileStatus.textContent;
-    openPopup(popupEdit)
-}
-
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closePopupByEsc);
@@ -121,10 +115,19 @@ function handleAddCardFormSubmit(evt) {
 
 document.addEventListener('click', closePopupByClick);
 imageElementClose.addEventListener('click', () => closePopup(imageModalWindow));
-openAddBtn.addEventListener('click', ()=> openPopup(addPopup));
+openAddBtn.addEventListener('click', ()=> {
+    validateConfigCard.clearErrors()
+    openPopup(addPopup)
+    formAddPopup.reset()
+});
 closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
 formAddPopup.addEventListener('submit', handleAddCardFormSubmit);
-openPopupBtn.addEventListener('click', openEditPopup, );
+openPopupBtn.addEventListener('click', () => {
+    validateConfigProfile.clearErrors()
+    openPopup(popupEdit)
+    nameInput.value = profileName.textContent;
+    statusInput.value = profileStatus.textContent;
+} );
 closePopupBtn.addEventListener('click', () => closePopup(popupEdit));
 formEditPopup.addEventListener('submit', handleProfileFormSubmit);
 renderCards ();
