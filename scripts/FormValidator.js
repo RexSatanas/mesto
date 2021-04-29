@@ -1,29 +1,29 @@
-import {formEditPopup, formAddPopup} from './index.js'
+
 export class FormValidator {
     constructor(validateConfig, formElement) {
-        this._inactiveButtonClass = validateConfig.inactiveButtonClass
-        this._inputErrorClass = validateConfig.inputErrorClass
-        this._errorClass = validateConfig.errorClass
         this._formElement = formElement
         this._inputList = Array.from(this._formElement.querySelectorAll(validateConfig.inputSelector))
         this._buttonElement = this._formElement.querySelector(validateConfig.submitButtonSelector)
+        this._inactiveButtonClass = validateConfig.inactiveButtonClass
+        this._inputErrorClass = validateConfig.inputErrorClass
+        this._errorClass = validateConfig.errorClass
     }
 
-    _showInputError(inputElement, errorMessage){
+    _showInputError(inputElement, errorMessage)  {
         const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
         inputElement.classList.add(this._inputErrorClass)
         errorElement.textContent = errorMessage
         errorElement.classList.add(this._errorClass)
     };
 
-    _hideInputError(inputElement){ // функция скрытия ошибки
+    _hideInputError(inputElement)  { // функция скрытия ошибки
         const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`)
         inputElement.classList.remove(this._inputErrorClass)
-        errorElement.classList.remove(this._errorClass)
+        inputElement.classList.remove(this._errorClass)
         errorElement.textContent = ''
     }
 
-    _checkInputValidity (inputElement) { // функция проверяет корректность введеных данных
+    _checkInputValidity(inputElement)  { // функция проверяет корректность введеных данных
         if(!inputElement.validity.valid) {
             this._showInputError(inputElement, inputElement.validationMessage);
         } else {
@@ -60,7 +60,7 @@ export class FormValidator {
     _clearErrors() {
         this._toggleButtonState(this._inputList, this._buttonElement)
         this._inputList.forEach((inputElement) => {
-            this._hideInputError (this._formElement,inputElement)
+            this._hideInputError (inputElement)
             this._toggleButtonState (this._inputList, this._buttonElement)
         })
     }
