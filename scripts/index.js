@@ -121,19 +121,10 @@ function handleAddCardFormSubmit(evt) {
 
 document.addEventListener('click', closePopupByClick);
 imageElementClose.addEventListener('click', () => closePopup(imageModalWindow));
-openAddBtn.addEventListener('click', ()=> {
-    validateConfigCard.clearErrors()
-    openPopup(addPopup)
-    formAddPopup.reset()
-});
+openAddBtn.addEventListener('click', ()=> openPopup(addPopup));
 closeAddPopupBtn.addEventListener('click', () => closePopup(addPopup));
 formAddPopup.addEventListener('submit', handleAddCardFormSubmit);
-openPopupBtn.addEventListener('click', () => {
-    validateConfigProfile.clearErrors()
-    openPopup(popupEdit)
-    nameInput.value = profileName.textContent;
-    statusInput.value = profileStatus.textContent;
-});
+openPopupBtn.addEventListener('click', openEditPopup, );
 closePopupBtn.addEventListener('click', () => closePopup(popupEdit));
 formEditPopup.addEventListener('submit', handleProfileFormSubmit);
 renderCards ();
