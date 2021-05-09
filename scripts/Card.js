@@ -1,52 +1,47 @@
-import {imageElement, imageElementName, imageModalWindow, openPopup} from "./index.js";
 
-export class Card {
-    constructor(data, selector, handleCardClick) {
-        this._selector = selector;
-        this._link = data.link;
-        this._name = data.name;
-        this._element = document.querySelector(this._selector).content.querySelector('.element').cloneNode(true);
-        this._image = this._element.querySelector('.element__image');
-        this._like = this._element.querySelector('.element__like');
-        this._handleCardClick
+
+export default class {
+    constructor(data, cardTemplate, {handleCardClick}) {
+        this._text = data.text;
+        this._image = data.image;
+        this._cardTemplate = cardTemplate;
+        this._handleCardClick = handleCardClick
     }
 
-    _openFullImg(evt) { //просмотр картинки
-        imageElement.src = evt.target.src;
-        imageElementName.textContent = evt.target.alt;
-        openPopup(imageModalWindow);
-    }
-
-    _likeCard() { //лайк карточки
-        this._like.classList.toggle('element__like_active');
-    }
-
-    _deleteCard() { // удаление карточки
-        this._element.remove();
-    }
-
-    _cardClickHandler(evt) { // обработчик кликов на  картинку, лайк  и удаление
-        if (evt.target.classList.contains('element__like')) {
-            this._likeCard(evt);
-        }
-        if (evt.target.classList.contains('element__image')) {
-            this._openFullImg(evt);
-        }
-        if (evt.target.classList.contains('card__del-button')){
-            this._deleteCard(evt);
-        }
-    }
-
-    _setCardEventListeners(){ // установить слушатель на карточку
-        this._element.addEventListener('click', (evt) => this._cardClickHandler(evt))
+   _getTemplate() {
+        const cardElement = this._cardTemplate.querySelector('.element').cloneNode(true);
+        return cardElement
     }
 
     generateCard() { // наполняем карточку
-        this._setCardEventListeners();
-        this._image.src = this._link;
-        this._image.alt = this._name;
-        this._element.querySelector('.element__name').textContent = this._name;
+        this._element = this._getTemplate()
+        this._setEventListeners();
+        this._element.querySelector('.element__image').src = this._image
+        this._element.querySelector('.element__name').textContent = this._text
         return this._element
     }
+
+
+    _likeCard = (button) => { //лайк карточки
+        button.classList.toggle('element__like_active');
+    }
+
+    _deleteCard = (evt) => { // удаление карточки
+        evt.target.closest('.element').remove();
+    }
+
+    _setEventListeners() { // обработчик кликов на  картинку, лайк  и удаление
+        this._element.querySelector('.element__image').addEventListener('click', () => {
+            this._handleCardClick();
+        });
+        this._element.querySelector('.element__like').addEventListener('click', () => {
+            this._likeCard(this._element.querySelector('.element__like'));
+        });
+        this._element.querySelector('.card__del-button').addEventListener('click', (evt) => {
+            this._deleteCard(evt);
+        });
+    }
+
+
 
 }
