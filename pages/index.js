@@ -8,7 +8,7 @@ import UserInfo from '../scripts/UserInfo.js';
 const popupEdit = document.querySelector('.popup_type_edit');
 const openPopupBtn = document.querySelector('.profile__info-edit-button');
 const closePopupBtn = popupEdit.querySelector('.popup__close-btn');
-export const formEditPopup = document.querySelector('.popup__edit-form');
+const formEditPopup = document.querySelector('.popup__edit-form');
 const profileName = document.querySelector('.profile__info-name');
 const profileStatus = document.querySelector('.profile__info-status');
 const nameInput = document.getElementById('name');
@@ -19,8 +19,8 @@ const closeAddPopupBtn = addPopup.querySelector('.popup__close-btn_add');
 const formAddPopup = addPopup.querySelector('.popup__add-form');
 const placeInput = addPopup.querySelector('.popup__input_name-place');
 const linkInput = addPopup.querySelector('.popup__input_link-place');
-export const imageModalWindow = document.querySelector('.popup_type_photo');
-export const imageElement = imageModalWindow.querySelector('.popup__image');
+const imageModalWindow = document.querySelector('.popup_type_photo');
+const imageElement = imageModalWindow.querySelector('.popup__image');
 const imageElementClose = imageModalWindow.querySelector('.popup__close-btn_img');
 const imageElementName = imageModalWindow.querySelector('.popup__img-title');
 const cardTemplate = document.querySelector('#card-template')
@@ -101,7 +101,7 @@ document.addEventListener('click', (evt) => {
         popup.open();
     }
     else if (evt.target === openPopupBtn) {
-        const popup = new Popup('.profile-popup');
+        const popup = new Popup('.popup_type_edit');
         nameInput.value = userInfo.getUserInfo().name;
         statusInput.value = userInfo.getUserInfo().status;
         const validFormAboutUser = new FormValidator(validateConfig, formEditPopup);
@@ -110,7 +110,7 @@ document.addEventListener('click', (evt) => {
     }
 });
 
-// 6 начальных карточек - инииц. Card и их добавление
+// 6 начальных карточек Card
 const cardList = new Section({
     items: initialCards,
     renderer: (item) => {
