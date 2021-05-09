@@ -5,24 +5,13 @@ import Popup from '../scripts/Popup.js';
 import PopupWithImage from '../scripts/PopupWithImage.js';
 import PopupWithForm from '../scripts/PopupWithForm.js';
 import UserInfo from '../scripts/UserInfo.js';
-const popupEdit = document.querySelector('.popup_type_edit');
 const openPopupBtn = document.querySelector('.profile__info-edit-button');
-const closePopupBtn = popupEdit.querySelector('.popup__close-btn');
 const formEditPopup = document.querySelector('.popup__edit-form');
-const profileName = document.querySelector('.profile__info-name');
-const profileStatus = document.querySelector('.profile__info-status');
 const nameInput = document.getElementById('name');
 const statusInput = document.getElementById('status');
 const addPopup = document.querySelector('.popup_type_add');
 const openAddBtn = document.querySelector('.profile__add-button');
-const closeAddPopupBtn = addPopup.querySelector('.popup__close-btn_add');
 const formAddPopup = addPopup.querySelector('.popup__add-form');
-const placeInput = addPopup.querySelector('.popup__input_name-place');
-const linkInput = addPopup.querySelector('.popup__input_link-place');
-const imageModalWindow = document.querySelector('.popup_type_photo');
-const imageElement = imageModalWindow.querySelector('.popup__image');
-const imageElementClose = imageModalWindow.querySelector('.popup__close-btn_img');
-const imageElementName = imageModalWindow.querySelector('.popup__img-title');
 const cardTemplate = document.querySelector('#card-template')
 const initialCards = [
     {
@@ -92,25 +81,7 @@ const popupWithFormUser = new PopupWithForm({
 });
 popupWithFormUser.setEventListeners();
 
-// открываем попапы
-document.addEventListener('click', (evt) => {
-    if (evt.target === openAddBtn) {
-        const popup = new Popup('.popup_type_add');
-        const validFormNewCard = new FormValidator(validateConfig, formAddPopup);
-        validFormNewCard.enableValidation();
-        popup.open();
-    }
-    else if (evt.target === openPopupBtn) {
-        const popup = new Popup('.popup_type_edit');
-        nameInput.value = userInfo.getUserInfo().name;
-        statusInput.value = userInfo.getUserInfo().status;
-        const validFormAboutUser = new FormValidator(validateConfig, formEditPopup);
-        validFormAboutUser.enableValidation();
-        popup.open();
-    }
-});
 
-// 6 начальных карточек Card
 const cardList = new Section({
     items: initialCards,
     renderer: (item) => {
@@ -128,4 +99,20 @@ const cardList = new Section({
     }
 }, '.elements');
 
+openAddBtn.addEventListener('click', (evt) => {
+    const popup = new Popup('.popup_type_add');
+    const validFormNewCard = new FormValidator(validateConfig, formAddPopup);
+    validFormNewCard.clearErrors()
+    validFormNewCard.enableValidation();
+    popup.open();
+})
+openPopupBtn.addEventListener('click', (evt) => {
+    const popup = new Popup('.popup_type_edit');
+    nameInput.value = userInfo.getUserInfo().name;
+    statusInput.value = userInfo.getUserInfo().status;
+    const validFormUser = new FormValidator(validateConfig, formEditPopup);
+    validFormUser.clearErrors()
+    validFormUser.enableValidation();
+    popup.open();
+})
 cardList.renderItems();
