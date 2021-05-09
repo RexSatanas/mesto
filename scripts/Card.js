@@ -1,13 +1,14 @@
 import {imageElement, imageElementName, imageModalWindow, openPopup} from "./index.js";
 
 export class Card {
-    constructor(data, selector) {
+    constructor(data, selector, handleCardClick) {
         this._selector = selector;
         this._link = data.link;
         this._name = data.name;
         this._element = document.querySelector(this._selector).content.querySelector('.element').cloneNode(true);
         this._image = this._element.querySelector('.element__image');
         this._like = this._element.querySelector('.element__like');
+        this._handleCardClick
     }
 
     _openFullImg(evt) { //просмотр картинки
