@@ -59,19 +59,17 @@ const cardList = new Section({
 }, '.elements');
 
 wokConstants.openAddBtn.addEventListener('click', (evt) => {
-    const popup = new Popup('.popup_type_add');
     const validFormNewCard = new FormValidator(validateConfig, wokConstants.formAddPopup);
     validFormNewCard.clearErrors()
     validFormNewCard.enableValidation();
-    popup.open();
+    popupWithFormAdd.open();
 })
 wokConstants.openPopupBtn.addEventListener('click', (evt) => {
-    const popup = new Popup('.popup_type_edit');
     wokConstants.nameInput.value = userInfo.getUserInfo().name;
     wokConstants.statusInput.value = userInfo.getUserInfo().status;
     const validFormUser = new FormValidator(validateConfig, wokConstants.formEditPopup);
     validFormUser.clearErrors()
     validFormUser.enableValidation();
-    popup.open();
+    popupWithFormUser.open();
 })
 cardList.renderItems();
