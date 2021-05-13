@@ -5,7 +5,7 @@ import PopupWithImage from '../scripts/PopupWithImage.js';
 import PopupWithForm from '../scripts/PopupWithForm.js';
 import UserInfo from '../scripts/UserInfo.js';
 import './index.css'
-import {openPopupBtn, formEditPopup, nameInput, statusInput,
+import {openPopupBtn, formEditPopup,
     addPopup, editPopup, photoPopup, cardPlace, openAddBtn,
     formAddPopup, cardTemplate, nameUserSelector, statusUserSelector,
     workImages, initialCards, validateConfig} from '../scripts/Constants.js'
