@@ -1,13 +1,18 @@
-export const wokConstants = {
-    openPopupBtn: document.querySelector('.profile__info-edit-button'),
-    formEditPopup: document.querySelector('.popup__edit-form'),
-    nameInput: document.getElementById('name'),
-    statusInput: document.getElementById('status'),
-    addPopup: document.querySelector('.popup_type_add'),
-    openAddBtn: document.querySelector('.profile__add-button'),
-    formAddPopup: document.querySelector('.popup__add-form'),
-    cardTemplate: document.querySelector('#card-template')
-}
+export const addPopup = document.querySelector('.popup_type_add'); //попап добавления карточек
+export const editPopup = document.querySelector('.popup_type_edit');//попап редактирования профиля
+export const photoPopup =document.querySelector('.popup_type_photo');//попап с полной картинкой
+export const cardPlace = document.querySelector('.elements'); // место для карточек
+export const nameUserSelector = document.querySelector('.profile__info-name');// имя юзера
+export const statusUserSelector = document.querySelector('.profile__info-status');// статус юзера
+export const openPopupBtn = document.querySelector('.profile__info-edit-button');// кнопка открытия попапа профиля
+export const formEditPopup = document.querySelector('.popup__edit-form');// форма попапа профиля
+export const nameInput = document.querySelector('#name'); // инпут имя
+export const statusInput = document.querySelector('#status');// инпут статус
+export const openAddBtn = document.querySelector('.profile__add-button');// кпока открытия попапа карточки
+export const formAddPopup = document.querySelector('.popup__add-form');// форма попапа карточки
+export const cardTemplate = document.querySelector('#card-template').content;
+
+
 
 export const workImages = {
     addButtonSVG: new URL('../images/AddButton.svg', import.meta.url),

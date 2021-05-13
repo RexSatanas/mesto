@@ -1,38 +1,59 @@
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
 import Section from '../scripts/Section.js';
-import Popup from '../scripts/Popup.js';
 import PopupWithImage from '../scripts/PopupWithImage.js';
 import PopupWithForm from '../scripts/PopupWithForm.js';
 import UserInfo from '../scripts/UserInfo.js';
-import '../pages/index.css'
-import {wokConstants, workImages, initialCards, validateConfig} from '../scripts/Constants.js'
-const popupWithFormAdd = new PopupWithForm({
-    popupSelector: '.popup_type_add',
-    handleFormSubmit: (formValues) => {
-        const card = new Card(
-            { image: formValues.url, text: formValues.place },
-            wokConstants.cardTemplate,
-            {
-                handleCardClick() {
-                    const popupWithImage = new PopupWithImage('.popup_type_photo');
-                    popupWithImage.open(formValues.url, formValues.place);
-                }
+import './index.css'
+import {openPopupBtn, formEditPopup, nameInput, statusInput,
+    addPopup, editPopup, photoPopup, cardPlace, openAddBtn,
+    formAddPopup, cardTemplate, nameUserSelector, statusUserSelector,
+    workImages, initialCards, validateConfig} from '../scripts/Constants.js'
+
+const popupWithImage = new PopupWithImage(photoPopup);
+const userInfo = new UserInfo({ nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector });
+const validationForm = new FormValidator(validateConfig);
+
+const createCard = (item) => {
+    const card = new Card({ image: item.link, text: item.name },
+        cardTemplate,
+        {
+            handleCardClick() {
+                popupWithImage.open(item.link, item.name);
             }
-        );
-        const cardElement = card.generateCard();
-        document.querySelector('.elements').prepend(cardElement);
+        }
+    );
+    const cardElement = card.generateCard();
+    cardList.addItem(cardElement);
+}
+
+//6 начальных карточек
+const cardList = new Section({
+    items: initialCards,
+    renderer: (item) => {
+        createCard(item)
+    }
+}, cardPlace);
+cardList.renderItems();
+
+const popupWithFormAdd = new PopupWithForm({
+    popupSelector: addPopup,
+    handleFormSubmit: (formValues) => {
+        const cardAdded = new Section({
+            items: [formValues],
+            renderer: (item) => {
+                createCard(item)
+            }
+        }, cardPlace);
+
+        cardAdded.renderItems();
         popupWithFormAdd.close();
     }
 });
-
 popupWithFormAdd.setEventListeners();
 
-const userInfo = new UserInfo({ userName: '.profile__info-name', userStatus: '.profile__info-status' })
-
-
 const popupWithFormUser = new PopupWithForm({
-    popupSelector: '.popup_type_edit',
+    popupSelector: editPopup,
     handleFormSubmit: (formValues) => {
         userInfo.setUserInfo(formValues.name, formValues.status);
         popupWithFormUser.close();
@@ -40,36 +61,13 @@ const popupWithFormUser = new PopupWithForm({
 });
 popupWithFormUser.setEventListeners();
 
-
-const cardList = new Section({
-    items: initialCards,
-    renderer: (item) => {
-        const card = new Card({ image: item.link, text: item.name },
-            wokConstants.cardTemplate,
-            {
-                handleCardClick () {
-                    const popupWithImage = new PopupWithImage('.popup_type_photo');
-                    popupWithImage.open(item.link, item.name)
-                }
-            }
-        );
-        const cardElement = card.generateCard();
-        cardList.addItem(cardElement);
-    }
-}, '.elements');
-
-wokConstants.openAddBtn.addEventListener('click', (evt) => {
-    const validFormNewCard = new FormValidator(validateConfig, wokConstants.formAddPopup);
-    validFormNewCard.clearErrors()
-    validFormNewCard.enableValidation();
-    popupWithFormAdd.open();
-})
-wokConstants.openPopupBtn.addEventListener('click', (evt) => {
-    wokConstants.nameInput.value = userInfo.getUserInfo().name;
-    wokConstants.statusInput.value = userInfo.getUserInfo().status;
-    const validFormUser = new FormValidator(validateConfig, wokConstants.formEditPopup);
-    validFormUser.clearErrors()
-    validFormUser.enableValidation();
+openPopupBtn.addEventListener('click', () =>{
+    validationForm.enableValidation(formEditPopup);
     popupWithFormUser.open();
 })
-cardList.renderItems();
+
+openAddBtn.addEventListener('click', () => {
+    validationForm.enableValidation(formAddPopup);
+    popupWithFormAdd.open();
+})
+
