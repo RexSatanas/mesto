@@ -1,13 +1,13 @@
 export default class {
-    constructor({items, renderer}, containerSelector) {
-        this._items = items;
+    constructor({arrayWithDataList, renderer}, containerSelector) {
+        this._arrayWithDataList = arrayWithDataList;
         this._renderer = renderer;
         this._container = document.querySelector(containerSelector);
     }
 
     renderItems() {
-        this._items.forEach(item => {
-            this._renderer(item); // вызываем renderer, передав item
+        this._arrayWithDataList.forEach(itemWithData => {
+            this._renderer(itemWithData);
         });
     }
 
@@ -15,4 +15,3 @@ export default class {
         this._container.prepend(element);
     }
 }
-

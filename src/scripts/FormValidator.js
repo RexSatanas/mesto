@@ -1,4 +1,3 @@
-
 export default class  {
     constructor(validateConfig, formElement) {
         this._formElement = formElement
