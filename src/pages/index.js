@@ -16,11 +16,11 @@ const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
 
 const createCard = (item) => {
-    const card = new Card({ image: item.link, text: item.name },
+    const card = new Card({ image: item.link, text: item.place },
         cardTemplate,
         {
             handleCardClick() {
-                popupWithImage.open(item.link, item.name);
+                popupWithImage.open(item.link, item.place);
             }
         }
     );
