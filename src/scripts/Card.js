@@ -7,7 +7,6 @@ export default class {
         this._placeLikeSelector = 'element__like';
         this._newCardElement = this._cardTemplate.querySelector(this._newCardSelector);
         this._handleCardClick = handleCardClick;
-        this._element = this._getTemplate();
         this._placeWithImage = this._element.querySelector('.element__image');
         this._placeWithCaption = this._element.querySelector('.element__name');
         this._placeLikeSymbol = this._element.querySelector('.element__like');
@@ -20,9 +19,11 @@ export default class {
     }
 
     generateCard() {
+        this._element = this._getTemplate();
         this._setEventListeners();
         this._placeWithImage.src = this._image;
         this._placeWithCaption.textContent = this._text;
+        this._placeWithImage.alt = this._text;
 
         return this._element;
     }
