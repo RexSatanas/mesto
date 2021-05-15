@@ -23,7 +23,7 @@ export default class {
         this._setEventListeners();
         this._placeWithImage.src = this._image;
         this._placeWithCaption.textContent = this._text;
-        this._placeWithImage.alt = this._text;
+
         return this._element;
     }
 
