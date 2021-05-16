@@ -1,25 +1,26 @@
+import {newCardSelector, placeLikeSelector} from '../utils/constants.js'
 export default class {
     constructor(data, cardTemplate, {handleCardClick}) {
         this._text = data.text;
         this._image = data.image;
         this._cardTemplate = cardTemplate;
-        this._newCardSelector = '.element';
-        this._placeLikeSelector = 'element__like';
-        this._newCardElement = this._cardTemplate.querySelector(this._newCardSelector);
+        this._newCardSelector = newCardSelector
+        this._placeLikeSelector = placeLikeSelector;
         this._handleCardClick = handleCardClick;
-        this._element = this._getTemplate();
-        this._placeWithImage = this._element.querySelector('.element__image');
-        this._placeWithCaption = this._element.querySelector('.element__name');
-        this._placeLikeSymbol = this._element.querySelector('.element__like');
-        this._placeBasketSymbol = this._element.querySelector('.card__del-button');
     }
 
     _getTemplate() {
+        this._newCardElement = this._cardTemplate.querySelector(this._newCardSelector);
         const cardElement = this._newCardElement.cloneNode(true);
         return cardElement;
     }
 
     generateCard() {
+        this._element = this._getTemplate();
+        this._placeWithImage = this._element.querySelector('.element__image');
+        this._placeWithCaption = this._element.querySelector('.element__name');
+        this._placeLikeSymbol = this._element.querySelector('.element__like');
+        this._placeBasketSymbol = this._element.querySelector('.card__del-button');
         this._setEventListeners();
         this._placeWithImage.src = this._image;
         this._placeWithCaption.textContent = this._text;

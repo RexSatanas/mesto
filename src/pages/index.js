@@ -7,13 +7,14 @@ import UserInfo from '../scripts/UserInfo.js';
 import './index.css';
 import { popupAddFoto, popupEdit, popupBigImage, sectionWithCard,
     nameUserSelector, statusUserSelector, buttonEditProfile, popupFormUser, nameInput, statusInput, addButton,
-    addForm, cardTemplate, validationConfig, initialCards
-} from '../scripts/Constants.js';
+    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector
+} from '../utils/constants.js';
 
 const popupWithImage = new PopupWithImage(popupBigImage);
 const userInfo = new UserInfo({ nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector });
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
+const handleAddCardFormSubmit = (dataCard) => cardList.addItem(createCard(dataCard))
 
 const createCard = (item) => {
     const card = new Card({ image: item.link, text: item.place },
@@ -36,20 +37,15 @@ const cardList = new Section({
     }
 }, sectionWithCard);
 
+
 const popupWithFormAdd = new PopupWithForm({
     popupSelector: popupAddFoto,
     handleFormSubmit: (formValues) => {
-        const cardAdded = new Section({
-            arrayWithDataList: [formValues],
-            renderer: (itemWithData) => {
-                const cardElement = createCard(itemWithData);
-                cardAdded.addItem(cardElement);
-            }
-        }, sectionWithCard);
-        cardAdded.renderItems();
+        handleAddCardFormSubmit(formValues)
         popupWithFormAdd.close();
     }
 });
+
 const popupWithFormUser = new PopupWithForm({
     popupSelector: popupEdit,
     handleFormSubmit: (formValues) => {

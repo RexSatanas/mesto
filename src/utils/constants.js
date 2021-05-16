@@ -4,6 +4,8 @@ const popupBigImage = '.popup_type_photo';
 const sectionWithCard = '.elements';
 const nameUserSelector = '.profile__info-name';
 const statusUserSelector = '.profile__info-status';
+const newCardSelector = '.element';
+const placeLikeSelector = '.element__like';
 const buttonEditProfile = document.querySelector('.profile__info-edit-button');
 const popupFormUser = document.querySelector('.popup__edit-form');
 const nameInput = popupFormUser.querySelector('#name');
@@ -49,4 +51,4 @@ const initialCards = [
 
 export {popupAddFoto, popupEdit, popupBigImage, sectionWithCard,
     nameUserSelector, statusUserSelector, buttonEditProfile, popupFormUser, nameInput, statusInput, addButton,
-    addForm, cardTemplate, validationConfig, initialCards};
+    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector};
