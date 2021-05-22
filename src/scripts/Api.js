@@ -88,4 +88,3 @@ export default class {
             .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
     }
 }
-}
