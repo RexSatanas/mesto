@@ -41,7 +41,7 @@ export default class {
     }
 
     _likeCard = (button) => {
-        button.classList.toggle(`${this._placeLikeSelector}_active`);
+        button.classList.toggle('element__like_active');
     }
 
     _deleteCard = (evt) => {
