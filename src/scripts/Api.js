@@ -1,12 +1,11 @@
 export default class {
-    constructor({address, token, groupId}) {
+    constructor({address, token}) {
         this._address = address
         this._token = token
-        this._groupId = groupId
     }
 
     getUserData() {
-        return fetch(`${this._address}/${this._groupId}/users/me`, {
+        return fetch(`${this._address}/users/me`, {
             headers: {
                 authorization: this._token
             }
@@ -15,7 +14,7 @@ export default class {
     }
 
     getInitialCards() {
-        return fetch(`${this._address}/${this._groupId}/cards`, {
+        return fetch(`${this._address}/cards`, {
             headers: {
                 authorization: this._token
             }
@@ -23,7 +22,7 @@ export default class {
             .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
     }
     setUserData({ name, about }) {
-        return fetch(`${this._address}/${this._groupId}/users/me`, {
+        return fetch(`${this._address}/users/me`, {
             method: 'PATCH',
             headers: {
                 authorization: this._token,
@@ -38,7 +37,7 @@ export default class {
     }
 
     addCard({ name, link }) {
-        return fetch(`${this._address}/${this._groupId}/cards`, {
+        return fetch(`${this._address}/cards`, {
             method: 'POST',
             headers: {
                 authorization: this._token,
@@ -53,7 +52,7 @@ export default class {
     }
 
     removeCard(cardId) {
-        return fetch(`${this._address}/${this._groupId}/cards/${cardId}`, {
+        return fetch(`${this._address}/cards/${cardId}`, {
             method: 'DELETE',
             headers: {
                 authorization: this._token
@@ -64,7 +63,7 @@ export default class {
     }
 
     toggleCardLike(cardId, like) {
-        return fetch(`${this._address}/${this._groupId}/cards/like/${cardId}`, {
+        return fetch(`${this._address}/cards/like/${cardId}`, {
             method: like ? 'PUT' : 'DELETE',
             headers: {
                 authorization: this._token,
@@ -75,7 +74,7 @@ export default class {
     }
 
     setUserAvatar(avatar) {
-        return fetch(`${this._address}/${this._groupId}/users/me/avatar`, {
+        return fetch(`${this._address}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
                 authorization: this._token,
