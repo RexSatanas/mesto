@@ -1,12 +1,13 @@
 import {newCardSelector, placeLikeSelector} from '../utils/constants.js'
 export default class {
-    constructor(data, cardTemplate, {handleCardClick}) {
+    constructor(data, cardTemplate, {handleCardClick, handleDelClick}) {
         this._text = data.text;
         this._image = data.image;
         this._cardTemplate = cardTemplate;
         this._newCardSelector = newCardSelector
         this._placeLikeSelector = placeLikeSelector;
         this._handleCardClick = handleCardClick;
+        this._handleDelClick = handleDelClick
     }
 
     _getTemplate() {
@@ -35,13 +36,13 @@ export default class {
         this._placeLikeSymbol.addEventListener('click', () => {
             this._likeCard(this._placeLikeSymbol);
         });
-        this._placeBasketSymbol.addEventListener('click', (evt) => {
-            this._deleteCard(evt);
+        this._placeBasketSymbol.addEventListener('click', () => {
+            this._handleDelClick()
         });
     }
 
     _likeCard = (button) => {
-        button.classList.toggle(`${this._placeLikeSelector}_active`);
+        button.classList.toggle('element__like_active');
     }
 
     _deleteCard = (evt) => {

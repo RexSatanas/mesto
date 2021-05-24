@@ -1,5 +1,6 @@
 const popupAddFoto = '.popup_type_add';
 const popupEdit = '.popup_type_edit';
+const popupSubmit = '.popup_type_submit'
 const popupBigImage = '.popup_type_photo';
 const sectionWithCard = '.elements';
 const nameUserSelector = '.profile__info-name';
@@ -24,31 +25,31 @@ const validationConfig = {
 
 const initialCards = [
     {
-        place: 'Архыз',
+        name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
     },
     {
-        place: 'Челябинская область',
+        name: 'Челябинская область',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
     },
     {
-        place: 'Иваново',
+        name: 'Иваново',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
     },
     {
-        place: 'Камчатка',
+        name: 'Камчатка',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
     },
     {
-        place: 'Холмогорский район',
+        name: 'Холмогорский район',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
     },
     {
-        place: 'Байкал',
+        name: 'Байкал',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
 
 export {popupAddFoto, popupEdit, popupBigImage, sectionWithCard,
     nameUserSelector, statusUserSelector, buttonEditProfile, popupFormUser, nameInput, statusInput, addButton,
-    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector};
+    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector, popupSubmit};
