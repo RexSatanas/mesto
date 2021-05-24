@@ -19,11 +19,15 @@ const userInfo = new UserInfo({ nameUserSelector: nameUserSelector, statusUserSe
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
 const handleAddCardFormSubmit = (dataCard) => cardList.addItem(createCard(dataCard))
-
+const userInformation = new UserInfo({
+    name: ".profile__info-name",
+    about: ".profile__info-status",
+    avatar: ".profile__avatar",
+});
+let myId
 const api = new Api({
-    address: 'https://mesto.nomoreparties.co',
+    address: 'https://mesto.nomoreparties.co/v1/cohort-24',
     token: 'be87e10d-5f50-49e4-a06f-5cefb6b5b607',
-    groupId: 'cohort-24'
 })
 
 const createCard = (item) => {
@@ -33,22 +37,27 @@ const createCard = (item) => {
             handleCardClick() {
                 popupWithImage.open(item.link, item.name);
             },
-            handleDelClick() {
+            /*handleDelClick() {
                 popupWithImage.open()
-            }
+            }*/
         }
     );
     const cardElement = card.generateCard();
     return cardElement;
 }
 
-const cardList = new Section({
-    arrayWithDataList: initialCards,
-    renderer: (itemWithData) => {
-        const cardElement = createCard(itemWithData);
-        cardList.addItem(cardElement);
-    }
+const cardList = new Section((item) =>{
+    const image = createCard(item);
+    cardList.addItem(image);
 }, sectionWithCard);
+
+Promise.all([api.getUserData(), api.getInitialCards()])
+    .then(([userData, initialCards]) => {
+        myId = userData;
+        userInformation.setUserInfo(myId);
+        cardList.renderItems(initialCards);
+    })
+    .catch((error) => console.log(error));
 
 
 const popupWithFormAdd = new PopupWithForm({
@@ -67,9 +76,9 @@ const popupWithFormUser = new PopupWithForm({
     }
 });
 
-const popupWitSubmit = new PopupWithSubmit({
+/*const popupWitSubmit = new PopupWithSubmit({
     popupSelector: popupSubmit
-})
+})*/
 
 addButton.addEventListener('click', () => {
     addCardFormValidator.clearErrors()
@@ -81,7 +90,7 @@ buttonEditProfile.addEventListener('click', () => {
     statusInput.value = userInfo.getUserInfo().status;
     popupWithFormUser.open();
 })
-cardList.renderItems();
+
 popupWithFormAdd.setEventListeners();
 popupWithFormUser.setEventListeners();
 editProfileFormValidator.enableValidation();
