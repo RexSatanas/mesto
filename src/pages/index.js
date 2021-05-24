@@ -8,8 +8,9 @@ import Api from '../scripts/Api.js';
 import './index.css';
 import { popupAddFoto, popupEdit, popupBigImage, sectionWithCard,
     nameUserSelector, statusUserSelector, buttonEditProfile, popupFormUser, nameInput, statusInput, addButton,
-    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector
+    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector, popupSubmit
 } from '../utils/constants.js';
+import PopupWithSubmit from "../scripts/PopupWithSubmit";
 
 
 
@@ -31,6 +32,9 @@ const createCard = (item) => {
         {
             handleCardClick() {
                 popupWithImage.open(item.link, item.name);
+            },
+            handleDelClick() {
+                popupWithImage.open()
             }
         }
     );
@@ -62,6 +66,10 @@ const popupWithFormUser = new PopupWithForm({
         popupWithFormUser.close();
     }
 });
+
+const popupWitSubmit = new PopupWithSubmit({
+    popupSelector: popupSubmit
+})
 
 addButton.addEventListener('click', () => {
     addCardFormValidator.clearErrors()

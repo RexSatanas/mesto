@@ -1,5 +1,6 @@
 const popupAddFoto = '.popup_type_add';
 const popupEdit = '.popup_type_edit';
+const popupSubmit = '.popup_type_submit'
 const popupBigImage = '.popup_type_photo';
 const sectionWithCard = '.elements';
 const nameUserSelector = '.profile__info-name';
@@ -51,4 +52,4 @@ const initialCards = [
 
 export {popupAddFoto, popupEdit, popupBigImage, sectionWithCard,
     nameUserSelector, statusUserSelector, buttonEditProfile, popupFormUser, nameInput, statusInput, addButton,
-    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector};
+    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector, popupSubmit};
