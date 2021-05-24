@@ -34,7 +34,7 @@ const createCard = (item) => {
                 popupWithImage.open(item.link, item.name);
             },
             handleDelClick() {
-                popupWithImage.open()
+                popupWithSubmit.open()
             }
         }
     );
@@ -67,7 +67,7 @@ const popupWithFormUser = new PopupWithForm({
     }
 });
 
-const popupWitSubmit = new PopupWithSubmit({
+const popupWithSubmit = new PopupWithSubmit({
     popupSelector: popupSubmit
 })
 
