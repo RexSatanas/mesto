@@ -1,89 +1,127 @@
 export default class {
-    constructor({address, token}) {
-        this._address = address
-        this._token = token
+    constructor({ url, headers }) {
+        this._url = url;
+        this._headers = headers;
     }
 
-    getUserData() {
-        return fetch(`${this._address}/users/me`, {
-            headers: {
-                authorization: this._token
-            }
+    getCards() {
+        return fetch(`${this._url}/cards`, {
+            headers: this._headers
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
-    }
-
-    getInitialCards() {
-        return fetch(`${this._address}/cards`, {
-            headers: {
-                authorization: this._token
-            }
-        })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
-    }
-    setUserData({ name, about }) {
-        return fetch(`${this._address}/users/me`, {
-            method: 'PATCH',
-            headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name,
-                about
+            .then((res) => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject(`ERROR: ${res.statusText}`)
             })
-        })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
     }
 
-    addCard({ name, link }) {
-        return fetch(`${this._address}/cards`, {
-            method: 'POST',
-            headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name,
-                link
-            })
-        })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
-    }
-
-    removeCard(cardId) {
-        return fetch(`${this._address}/cards/${cardId}`, {
+    deleteCard(id) {
+        return fetch(`${this._url}/cards/${id}`, {
             method: 'DELETE',
-            headers: {
-                authorization: this._token
-            }
-
+            headers: this._headers
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
+            .then((res) => {
+                if (res.ok) {
+                    // console.log('карточка удалена')
+                    return res.json()
+                }
+                return Promise.reject(`ERROR: ${res.statusText}`)
+            })
     }
 
-    toggleCardLike(cardId, like) {
-        return fetch(`${this._address}/cards/like/${cardId}`, {
-            method: like ? 'PUT' : 'DELETE',
-            headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
-            }
+
+    likeCard(id) {
+        return fetch(`${this._url}/cards/likes/${id}`, {
+            method: 'PUT',
+            headers: this._headers
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
+            .then((res) => {
+                if (res.ok) {
+                    // console.log('лайк')
+                    return res.json()
+                }
+                return Promise.reject(`ERROR: ${res.statusText}`)
+            })
     }
 
-    setUserAvatar(avatar) {
-        return fetch(`${this._address}/users/me/avatar`, {
+
+    likeCardCancel(id) {
+        return fetch(`${this._url}/cards/likes/${id}`, {
+            method: 'DELETE',
+            headers: this._headers
+        })
+            .then((res) => {
+                if (res.ok) {
+                    // console.log('лайк удален')
+                    return res.json()
+                }
+                return Promise.reject(`ERROR: ${res.statusText}`)
+            })
+    }
+
+    getUser() {
+        return fetch(`${this._url}/users/me`, {
+            headers: this._headers
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject(`ERROR: ${res.statusText}`)
+            })
+    }
+
+    saveUserInfo({ name, activity }) {
+        return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
-            headers: {
-                authorization: this._token,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
-                avatar
+                name: name,
+                about: activity
             })
         })
-            .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
+            .then(res => {
+                if (res.ok) {
+                    return res.json()
+                } else {
+                    return Promise.reject(`ERROR: ${res.status}`)
+                }
+            })
+    }
+
+    saveNewCard({ name, url }) {
+        return fetch(`${this._url}/cards`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: name,
+                link: url
+            })
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json()
+                } else {
+                    return Promise.reject(`ERROR: ${res.status}`)
+                }
+            })
+    }
+
+    newAvatar(url) {
+        return fetch(`${this._url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                avatar: url,
+            })
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json()
+                } else {
+                    return Promise.reject(`ERROR: ${res.status}`)
+                }
+            })
     }
 }

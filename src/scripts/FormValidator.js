@@ -1,11 +1,12 @@
 export default class  {
     constructor(validateConfig, formElement) {
         this._formElement = formElement
-        this._inputList = Array.from(this._formElement.querySelectorAll(validateConfig.inputSelector))
-        this._buttonElement = this._formElement.querySelector(validateConfig.submitButtonSelector)
+        this._inputSelector = validateConfig.inputSelector
+        this._submitButtonSelector = validateConfig.submitButtonSelector
         this._inactiveButtonClass = validateConfig.inactiveButtonClass
         this._inputErrorClass = validateConfig.inputErrorClass
         this._errorClass = validateConfig.errorClass
+        this._buttonOpenPopup = validateConfig.buttonOpenPopup
     }
 
     _showInputError(inputElement, errorMessage)  {
@@ -27,7 +28,7 @@ export default class  {
             this._showInputError(inputElement, inputElement.validationMessage);
         } else {
             this._hideInputError(inputElement);
-        };
+        }
     }
 
     _hasInvalidInput(){ //выключение невалидных полей
@@ -46,7 +47,7 @@ export default class  {
         }
     }
 
-    _setFormEventListeners() { // функция устанавливает слушатели инпута на формы
+/*    _setFormEventListeners() { // функция устанавливает слушатели инпута на формы
         this._toggleButtonState()
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
@@ -54,7 +55,7 @@ export default class  {
                 this._toggleButtonState ()
             })
         })
-    }
+    }*/
 
     _clearErrors() {
         this._toggleButtonState(this._inputList, this._buttonElement)
@@ -69,7 +70,25 @@ export default class  {
     }
 
     enableValidation() { // функция запускающая процесс валидации
-        this._setFormEventListeners(this._formElement);
+        this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+        this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
+        this._toggleButtonState();
+
+        this._buttonOpenPopup.forEach(button => {
+            button.addEventListener('click', () => {
+                this._inputList.forEach(input => {
+                    this._hideInputError(input);
+                });
+                this._toggleButtonState();
+            })
+        })
+
+        this._inputList.forEach(input => {
+            input.addEventListener('input', () => {
+                this._checkInputValidity(input);
+                this._toggleButtonState();
+            });
+        });
     }
 
 }

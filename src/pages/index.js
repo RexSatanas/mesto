@@ -3,83 +3,155 @@ import FormValidator from '../scripts/FormValidator.js';
 import Section from '../scripts/Section.js';
 import PopupWithImage from '../scripts/PopupWithImage.js';
 import PopupWithForm from '../scripts/PopupWithForm.js';
+import PopupWithSubmit from "../scripts/PopupWithSubmit.js";
 import UserInfo from '../scripts/UserInfo.js';
-import Api from '../scripts/Api.js';
+import Api from '../scripts/Api.js'
 import './index.css';
 import { popupAddFoto, popupEdit, popupBigImage, sectionWithCard,
     nameUserSelector, statusUserSelector, buttonEditProfile, popupFormUser, nameInput, statusInput, addButton,
-    addForm, cardTemplate, validationConfig, initialCards, newCardSelector, placeLikeSelector, popupSubmit
+    addForm, cardTemplate, validationConfig, token, url, userAvatar, likeCounter, clickedLike, popupAvatar,
+    avatarForm, avatarEdit, popupSubmit, buttonConfirm
 } from '../utils/constants.js';
-import PopupWithSubmit from "../scripts/PopupWithSubmit";
-
-
 
 const popupWithImage = new PopupWithImage(popupBigImage);
+const popupWithSubmit = new PopupWithSubmit(popupSubmit)
 const userInfo = new UserInfo({ nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector });
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
-const handleAddCardFormSubmit = (dataCard) => cardList.addItem(createCard(dataCard))
-const userInformation = new UserInfo({
-    name: ".profile__info-name",
-    about: ".profile__info-status",
-    avatar: ".profile__avatar",
-});
-let myId
+const AvatarFormValidator = new FormValidator(validationConfig, popupAvatar);
 const api = new Api({
-    address: 'https://mesto.nomoreparties.co/v1/cohort-24',
-    token: 'be87e10d-5f50-49e4-a06f-5cefb6b5b607',
-})
+    url: url,
+    headers: {
+        authorization: token, 'Content-Type': 'application/json'
+    }
+});
 
 const createCard = (item) => {
-    const card = new Card({ image: item.link, text: item.name },
-        cardTemplate,
+    const card = new Card(item, cardTemplate,
         {
             handleCardClick() {
                 popupWithImage.open(item.link, item.name);
             },
-            /*handleDelClick() {
-                popupWithImage.open()
-            }*/
+            handleBasketClick(evt) {  // обр-к клика удаления карточки
+                popupWithSubmit.open();
+                buttonConfirm.addEventListener('click', () => {
+                    api.deleteCard(item._id) // удалил с сервера
+                        .then(() => {
+                            popupWithSubmit.close();
+                            this.deleteCard(evt); // удалил из DOM
+                        })
+                        .catch(err => console.log(err));
+                })
+                popupWithSubmit.setEventListeners();
+            },
+            counterLikes() {           // вызов по клику лайка. слушатель в Card.js
+                if (cardElement.querySelector(clickedLike)) {
+                    api.likeCard(item._id)
+                        .then(res => {
+                            // console.log(item)  // объект карточки
+                            cardElement.querySelector(likeCounter).textContent = res.likes.length
+                        })
+                        .catch(err => console.log(err))
+                } else {
+                    api.likeCardCancel(item._id)
+                        .then(res => {
+                            cardElement.querySelector(likeCounter).textContent = res.likes.length
+                        })
+                        .catch(err => console.log(err))
+                }
+            }
         }
     );
     const cardElement = card.generateCard();
     return cardElement;
 }
+//Отрисовка загрузки сабмита
+function loadingText(isLoading, buttonSubmit, initialText) {
+    if (isLoading) {
+        buttonSubmit.textContent = 'Сохранение...'
+    } else {
+        buttonSubmit.textContent = initialText
+    }
+}
 
-const cardList = new Section((item) =>{
-    const image = createCard(item);
-    cardList.addItem(image);
-}, sectionWithCard);
-
-Promise.all([api.getUserData(), api.getInitialCards()])
-    .then(([userData, initialCards]) => {
-        myId = userData;
-        userInformation.setUserInfo(myId);
-        cardList.renderItems(initialCards);
+api.getCards()
+    .then(res => {
+        const newArr = res.slice(0, 6)
+        const cardList = new Section({
+            arrayWithDataList: newArr,
+            renderer: (itemWithData) => {
+                const cardElement = createCard(itemWithData);
+                cardList.addItem(cardElement);
+            }
+        }, sectionWithCard);
+        cardList.renderItems();
     })
-    .catch((error) => console.log(error));
+    .catch(err => console.log(err))
 
+api.getUser()
+    .then(res => {
+        userInfo.setUserInfo(res.name, res.about);
+        userAvatar.src = res.avatar;
+    })
+    .catch(err => console.log(err))
 
+// попапы
 const popupWithFormAdd = new PopupWithForm({
     popupSelector: popupAddFoto,
-    handleFormSubmit: (formValues) => {
-        handleAddCardFormSubmit(formValues)
-        popupWithFormAdd.close();
+    handleFormSubmit: (formValues, buttonSubmit, initialText) => {
+        loadingText(true, buttonSubmit, initialText)
+        const cardAdded = new Section({
+            arrayWithDataList: [formValues],
+            renderer: (itemWithData) => {
+                api.saveNewCard({ name: itemWithData.name, url: itemWithData.link })
+                    .then((cardData) => {
+                        const cardElement = createCard(cardData);
+                        cardAdded.addItem(cardElement);
+                    })
+                    .catch(err => console.log(err))
+                    .finally(() => {
+                        loadingText(false, buttonSubmit, initialText)
+                        popupWithFormAdd.close();
+                    });
+            }
+        }, sectionWithCard);
+        cardAdded.renderItems();
     }
 });
 
 const popupWithFormUser = new PopupWithForm({
     popupSelector: popupEdit,
-    handleFormSubmit: (formValues) => {
-        userInfo.setUserInfo(formValues.name, formValues.status);
-        popupWithFormUser.close();
+    handleFormSubmit: (formValues, buttonSubmit, initialText) => {
+        loadingText(true, buttonSubmit, initialText)
+        api.saveUserInfo({ name: formValues.name, activity: formValues.activity })
+            .then(res => {
+                userInfo.setUserInfo(res.name, res.about)
+            })
+            .catch(err => console.log(err))
+            .finally(() => {
+                loadingText(false, buttonSubmit, initialText)
+                popupWithFormUser.close();
+            });
     }
 });
 
-/*const popupWitSubmit = new PopupWithSubmit({
-    popupSelector: popupSubmit
-})*/
+const popupWithFormAvatar = new PopupWithForm({
+    popupSelector: popupAvatar,
+    handleFormSubmit: (formValues, buttonSubmit, initialText) => {
+        loadingText(true, buttonSubmit, initialText)
+        api.newAvatar(formValues.link)
+            .then(res => {
+                userAvatar.src = res.avatar;
+            })
+            .catch(err => console.log(err))
+            .finally(() => {
+                loadingText(false, buttonSubmit, initialText)
+                popupWithFormAvatar.close()
+            });
+    }
+});
 
+//слушатели событий на кнопки
 addButton.addEventListener('click', () => {
     addCardFormValidator.clearErrors()
     popupWithFormAdd.open();
@@ -90,9 +162,15 @@ buttonEditProfile.addEventListener('click', () => {
     statusInput.value = userInfo.getUserInfo().status;
     popupWithFormUser.open();
 })
+avatarEdit.addEventListener('click', () => {
+    AvatarFormValidator.clearErrors();
+    popupWithFormAvatar.open();
+})
 
 popupWithFormAdd.setEventListeners();
 popupWithFormUser.setEventListeners();
+popupWithFormAvatar.setEventListeners()
 editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
+AvatarFormValidator.enableValidation()
 
