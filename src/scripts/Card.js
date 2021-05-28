@@ -60,7 +60,7 @@ export default class {
         this._counterLikes();
     }
 
-    deleteCard = (evt) => {
-        evt.target.closest(this._newCardSelector).remove();
+    deleteElement = (event) => {
+        event.target.closest(this._newCardSelector).remove();
     }
 }

@@ -16,22 +16,23 @@ export default class {
             })
     }
 
-    deleteCard(_id) {
-        return fetch(`${this._url}/cards/${_id}`, {
+    deleteCard(id) {
+        return fetch(`${this._url}/cards/${id}`, {
             method: 'DELETE',
             headers: this._headers
         })
             .then((res) => {
                 if (res.ok) {
+                    // console.log('карточка удалена')
                     return res.json()
                 }
-                return Promise.reject(`ERROR: ${res.statusText}`)
+                return Promise.reject(`Ошибка удаления карточки: ${res.statusText}`)
             })
     }
 
 
-    likeCard(_id) {
-        return fetch(`${this._url}/cards/likes/${_id}`, {
+    likeCard(id) {
+        return fetch(`${this._url}/cards/likes/${id}`, {
             method: 'PUT',
             headers: this._headers
         })
@@ -44,8 +45,8 @@ export default class {
     }
 
 
-    likeCardCancel(_id) {
-        return fetch(`${this._url}/cards/likes/${_id}`, {
+    likeCardCancel(id) {
+        return fetch(`${this._url}/cards/likes/${id}`, {
             method: 'DELETE',
             headers: this._headers
         })

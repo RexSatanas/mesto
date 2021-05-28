@@ -62,7 +62,7 @@ const createCard = (item) => {
                         api.deleteCard(item._id) // удалил с сервера
                             .then(() => {
                                 popupWithSubmit.close();
-                                this.deleteCard(evt); // удалил из DOM
+                                this.deleteElement(evt); // удалил из DOM
                             })
                             .catch(err => console.log(err));
                     })
