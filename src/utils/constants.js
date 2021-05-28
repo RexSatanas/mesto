@@ -8,9 +8,9 @@ const nameUserSelector = '.profile__info-name';
 const statusUserSelector = '.profile__info-status';
 const newCardSelector = '.element';
 const placeLikeSelector = '.element__like';
-const likeCounter = '.element__like_counter';
+const likeCounter = '.element__like-counter';
 const clickedLike = '.element__like_active';
-const userAvatar = '.profile__avatar';
+const userAvatar = document.querySelector('.profile__avatar');
 //изменение профиля
 const buttonEditProfile = document.querySelector('.profile__info-edit-button');
 const popupFormUser = document.querySelector('.popup__edit-form');

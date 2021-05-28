@@ -14,8 +14,8 @@ export default class {
     _getTemplate() {
         if (this._data.owner._id !== "042e9b68a6fc29c7223d0553") {
             const cardElement = this._newCardElement.cloneNode(true);
-            cardElement.querySelector('.photo-place__basket').remove();
-            // console.log(this._data)
+            cardElement.querySelector('.card__del-button').remove();
+            //console.log(this._data)
             return cardElement;
         } else {
             const cardElement = this._newCardElement.cloneNode(true);
@@ -36,7 +36,7 @@ export default class {
         this._placeWithImage.alt = this._data.name;
         this._data.likes.forEach(user => {
             if(user._id == "042e9b68a6fc29c7223d0553") {
-                this._placeLikeSymbol.classList.add(`${this._placeLikeSelector}_active`)
+                this._placeLikeSymbol.classList.add('element__like_active')
             }
         });
         return this._element;
@@ -57,7 +57,7 @@ export default class {
     }
 
     _likeCard = (button) => {
-        button.classList.toggle(`${this._placeLikeSelector}_active`);
+        button.classList.toggle('element__like_active');
         this._counterLikes();
     }
 

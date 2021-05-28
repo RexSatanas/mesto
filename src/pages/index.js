@@ -26,6 +26,27 @@ const api = new Api({
     }
 });
 
+api.getCards()
+    .then(res => {
+        const newArr = res
+        const cardList = new Section({
+            arrayWithDataList: newArr,
+            renderer: (itemWithData) => {
+                const cardElement = createCard(itemWithData);
+                cardList.addItem(cardElement);
+            }
+        }, sectionWithCard);
+        cardList.renderItems();
+    })
+    .catch(err => console.log(err))
+
+api.getUser()
+    .then(res => {
+        userInfo.setUserInfo(res.name, res.about);
+        userAvatar.src = res.avatar;
+    })
+    .catch(err => console.log(err))
+
 const createCard = (item) => {
     const card = new Card(item, cardTemplate,
         {
@@ -44,11 +65,10 @@ const createCard = (item) => {
                 })
                 popupWithSubmit.setEventListeners();
             },
-            counterLikes() {           // вызов по клику лайка. слушатель в Card.js
+            counterLikes() {
                 if (cardElement.querySelector(clickedLike)) {
                     api.likeCard(item._id)
                         .then(res => {
-                            // console.log(item)  // объект карточки
                             cardElement.querySelector(likeCounter).textContent = res.likes.length
                         })
                         .catch(err => console.log(err))
@@ -73,27 +93,6 @@ function loadingText(isLoading, buttonSubmit, initialText) {
         buttonSubmit.textContent = initialText
     }
 }
-
-api.getCards()
-    .then(res => {
-        const newArr = res.slice(0, 6)
-        const cardList = new Section({
-            arrayWithDataList: newArr,
-            renderer: (itemWithData) => {
-                const cardElement = createCard(itemWithData);
-                cardList.addItem(cardElement);
-            }
-        }, sectionWithCard);
-        cardList.renderItems();
-    })
-    .catch(err => console.log(err))
-
-api.getUser()
-    .then(res => {
-        userInfo.setUserInfo(res.name, res.about);
-        userAvatar.src = res.avatar;
-    })
-    .catch(err => console.log(err))
 
 // попапы
 const popupWithFormAdd = new PopupWithForm({
@@ -153,17 +152,14 @@ const popupWithFormAvatar = new PopupWithForm({
 
 //слушатели событий на кнопки
 addButton.addEventListener('click', () => {
-    addCardFormValidator.clearErrors()
     popupWithFormAdd.open();
 })
 buttonEditProfile.addEventListener('click', () => {
-    editProfileFormValidator.clearErrors()
     nameInput.value = userInfo.getUserInfo().name;
     statusInput.value = userInfo.getUserInfo().status;
     popupWithFormUser.open();
 })
 avatarEdit.addEventListener('click', () => {
-    AvatarFormValidator.clearErrors();
     popupWithFormAvatar.open();
 })
 

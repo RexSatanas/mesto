@@ -9,14 +9,14 @@ export default class  {
         this._buttonOpenPopup = validateConfig.buttonOpenPopup
     }
 
-    _showInputError(inputElement, errorMessage)  {
+    _showInputError(inputElement, errorMessage)  { // показать ошибку
         const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
         inputElement.classList.add(this._inputErrorClass)
         errorElement.textContent = errorMessage
         errorElement.classList.add(this._errorClass)
     };
 
-    _hideInputError(inputElement)  { // функция скрытия ошибки
+    _hideInputError(inputElement)  { // скрыть ошибку
         const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`)
         inputElement.classList.remove(this._inputErrorClass)
         inputElement.classList.remove(this._errorClass)
@@ -31,64 +31,45 @@ export default class  {
         }
     }
 
-    _hasInvalidInput(){ //выключение невалидных полей
-        return this._inputList.some((inputElement) => {
-            return !inputElement.validity.valid
-        })
+
+    _hasInvalidInput() {
+        return this._inputList.some(inputElement => {
+            return !inputElement.validity.valid;
+        });
     }
 
-    _toggleButtonState(){ // функция включает и выключает кнопку отправить
-        if (this._hasInvalidInput(this._inputList)) {
-            this._buttonElement.classList.add(this._inactiveButtonClass)
-            this._buttonElement.disabled = true
+    _toggleButtonState() {
+        if (this._hasInvalidInput()) {
+            this._buttonElement.classList.add(this._inactiveButtonClass);
+            this._buttonElement.setAttribute('disabled', true);
         } else {
-            this._buttonElement.classList.remove(this._inactiveButtonClass)
-            this._buttonElement.disabled = false
+            this._buttonElement.classList.remove(this._inactiveButtonClass);
+            this._buttonElement.removeAttribute('disabled');
         }
     }
 
-/*    _setFormEventListeners() { // функция устанавливает слушатели инпута на формы
-        this._toggleButtonState()
-        this._inputList.forEach((inputElement) => {
-            inputElement.addEventListener('input', () => {
-                this._checkInputValidity (inputElement)
-                this._toggleButtonState ()
-            })
-        })
-    }*/
-
-    _clearErrors() {
-        this._toggleButtonState(this._inputList, this._buttonElement)
-        this._inputList.forEach((inputElement) => {
-            this._hideInputError (inputElement)
-            this._toggleButtonState (this._inputList, this._buttonElement)
-        })
-    }
-
-    clearErrors() {
-        this._clearErrors(this._formElement);
-    }
-
-    enableValidation() { // функция запускающая процесс валидации
-        this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-        this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
+    enableValidation() {
+        this._inputList = Array.from(document.querySelectorAll(this._inputSelector));
+        this._buttonElement = document.querySelector(this._submitButtonSelector);
         this._toggleButtonState();
 
         this._buttonOpenPopup.forEach(button => {
             button.addEventListener('click', () => {
-                this._inputList.forEach(input => {
-                    this._hideInputError(input);
+                this._inputList.forEach(inputElement => {
+                    this._hideInputError(inputElement);
                 });
                 this._toggleButtonState();
             })
         })
 
-        this._inputList.forEach(input => {
-            input.addEventListener('input', () => {
-                this._checkInputValidity(input);
+        this._inputList.forEach(inputElement => {
+            inputElement.addEventListener('input', () => {
+                this._checkInputValidity(inputElement);
                 this._toggleButtonState();
             });
         });
     }
-
 }
+
+
+
