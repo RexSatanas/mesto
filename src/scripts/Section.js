@@ -1,14 +1,17 @@
 export default class {
-    constructor(renderer, containerSelector) {
+    constructor({arrayWithDataList, renderer}, containerSelector) {
+        this._arrayWithDataList = arrayWithDataList;
         this._renderer = renderer;
         this._container = document.querySelector(containerSelector);
     }
 
-    addItem(element) { //метод добавления карточку в начало списка
-        this._container.prepend(element);
+    renderItems() {
+        this._arrayWithDataList.forEach(itemWithData => {
+            this._renderer(itemWithData);
+        });
     }
 
-    renderItems(cards) {
-        cards.forEach(item => this._renderer(item));
-    };
+    addItem(element) {
+        this._container.prepend(element);
+    }
 }

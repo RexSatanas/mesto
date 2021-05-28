@@ -1,22 +1,19 @@
 export default class {
-    constructor({name, about, avatar}) {
-        this._name = document.querySelector(name);
-        this._status = document.querySelector(about);
-        this._avatar = document.querySelector(avatar);
+    constructor({nameUserSelector, statusUserSelector}) {
+        this._name = document.querySelector(nameUserSelector);
+        this._status = document.querySelector(statusUserSelector);
     }
 
     getUserInfo() {
-        return {
-            name: this._name.textContent,
-            about: this._information.textContent,
-            avatar: this._avatar.src
-        }
+        const userInfo = {};
+        userInfo.name = this._name.textContent;
+        userInfo.status = this._status.textContent;
+        return userInfo
     }
 
-
-    setUserInfo(data) { //метод принимает новые данные пользователя и добавляет их на страницу
-        this._name.textContent = data.name;
-        this._status.textContent = data.about;
-        this._avatar.style.backgroundImage = `url(${data.avatar})`;
+    // принимает новые данные пользователя и добавляет их на страницу в ф.-колбэке
+    setUserInfo(userNameInInput, userStatusInInput) {
+        this._name.textContent = userNameInInput;
+        this._status.textContent = userStatusInInput;
     }
 }

@@ -14,8 +14,8 @@ const userAvatar = document.querySelector('.profile__avatar');
 //изменение профиля
 const buttonEditProfile = document.querySelector('.profile__info-edit-button');
 const popupFormUser = document.querySelector('.popup__edit-form');
-const nameInput = popupFormUser.querySelector('#name');
-const statusInput = popupFormUser.querySelector('#status');
+const nameInput = popupFormUser.querySelector('.popup__input-name');
+const statusInput = popupFormUser.querySelector('.popup__input-status');
 // добавление новых карточек
 const addButton = document.querySelector('.profile__add-button');
 const addForm = document.querySelector('.popup__add-form');
