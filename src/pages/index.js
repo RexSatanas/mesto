@@ -7,7 +7,7 @@ import PopupWithSubmit from "../scripts/PopupWithSubmit.js";
 import UserInfo from '../scripts/UserInfo.js';
 import Api from '../scripts/Api.js'
 import './index.css';
-import { popupAddFoto, popupEdit, popupBigImage, sectionWithCard,
+import { popupAddFoto, popupUser, popupBigImage, sectionWithCard,
     nameUserSelector, statusUserSelector, buttonEditProfile, popupFormUser, nameInput, statusInput, addButton,
     addForm, cardTemplate, validationConfig, token, url, userAvatar, likeCounter, clickedLike, popupAvatar,
     avatarForm, avatarEdit, popupSubmit, buttonConfirm
@@ -18,7 +18,7 @@ const popupWithSubmit = new PopupWithSubmit(popupSubmit)
 const userInfo = new UserInfo({ nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector });
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
-const AvatarFormValidator = new FormValidator(validationConfig, popupAvatar);
+const AvatarFormValidator = new FormValidator(validationConfig, avatarForm);
 
 // Api
 const api = new Api({
@@ -122,10 +122,10 @@ const popupWithFormAdd = new PopupWithForm({
 });
 
 const popupWithFormUser = new PopupWithForm({
-    popupSelector: popupEdit,
+    popupSelector: popupUser,
     handleFormSubmit: (formValues, buttonSubmit, initialText) => {
         loadingText(true, buttonSubmit, initialText)
-        api.saveUserInfo({ name: formValues.name, activity: formValues.activity })
+        api.saveUserInfo({ name: formValues.name, status: formValues.status })
             .then(res => {
                 userInfo.setUserInfo(res.name, res.about)
             })

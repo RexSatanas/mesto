@@ -31,6 +31,7 @@ export default class  {
         }
     }
 
+
     _hasInvalidInput() {
         return this._inputList.some(inputElement => {
             return !inputElement.validity.valid;
@@ -69,6 +70,5 @@ export default class  {
         });
     }
 }
-
 
 

@@ -1,5 +1,5 @@
 const popupAddFoto = '.popup_type_add';
-const popupEdit = '.popup_type_edit';
+const popupUser = '.popup_type_user';
 const popupBigImage = '.popup_type_photo';
 const popupSubmit = '.popup_type_submit';
 const popupAvatar = '.popup_type_avatar';
@@ -38,7 +38,7 @@ const validationConfig = {
     buttonOpenPopup: Array.from(document.querySelectorAll('.profile__click'))
 }
 
-export {popupAddFoto, popupEdit, popupBigImage, sectionWithCard,
+export {popupAddFoto, popupUser, popupBigImage, sectionWithCard,
     nameUserSelector, statusUserSelector, buttonEditProfile, popupFormUser, nameInput, statusInput, addButton,
     addForm, cardTemplate, validationConfig, newCardSelector, placeLikeSelector, token, url, userAvatar,
     likeCounter, clickedLike, popupAvatar, avatarForm, avatarEdit, popupSubmit, buttonConfirm};
