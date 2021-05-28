@@ -58,7 +58,7 @@
     <form name="add-card" action="#" class="popup__form popup__add-form" novalidate>
         <button id="close-add-popup-btn" type="button" class="popup__close-btn popup__close-btn_add"></button>
         <h2 class="popup__title">Новое место</h2>
-        <input id="place" name="place" class="popup__input popup__input_name-place" type="text" required minlength="2" maxlength="30" placeholder="Название">
+        <input id="place" name="name" class="popup__input popup__input_name-place" type="text" required minlength="2" maxlength="30" placeholder="Название">
         <span class="popup__input-error" id="place-error"></span>
         <input id="link" name="link" class="popup__input popup__input_link-place" type="url" required  placeholder="Ссылка на картинку">
         <span class="popup__input-error error2" id="link-error"></span>
@@ -69,7 +69,7 @@
     <form name="avatar-change" action="#" class="popup__form popup__avatar-form" novalidate>
         <button id="close-avatar-popup-btn" type="button" class="popup__close-btn popup__close-btn_avatar"></button>
         <h2 class="popup__title">Обновить аватар</h2>
-        <input id="avatar-link" name="link" class="popup__input popup__input_link-avatar" type="url" required  placeholder="Ссылка на картинку">
+        <input id="avatar" name="link" class="popup__input popup__input_link-avatar" type="url" required  placeholder="Ссылка на картинку">
         <span class="popup__input-error" id="avatar-error"></span>
         <button type="submit" class="popup__save-btn">Да</button>
     </form>
@@ -82,12 +82,20 @@
     </div>
 </div>
 <div class="popup popup_type_submit">
-    <div class="popup__container">
+    <form name="popup-submit" action="#" class="popup__form popup__submit-form" novalidate>
+        <button id="close-submit-popup-btn" type="button" class="popup__close-btn popup__close-btn_submit"></button>
         <h2 class="popup__title">Вы уверены?</h2>
-        <button class="popup__save-btn popup__save-confirm" type="button">Да</button>
-        <button class="popup__close-btn popup__close-btn_submit" type="button" aria-label="закроем поле удаления карточки"></button>
+        <button type="submit" class="popup__save-btn">Да</button>
+    </form>
+</div>
+<div class="popup popup_type_submit">
+    <div class="popup__form popup__container">
+        <button class="popup__close-btn popup__close-btn-submit" type="button"></button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <button class="popup__save-btn popup__save-btn_confirm" type="button">Да</button>
     </div>
 </div>
+
 </body>
 </html>
 

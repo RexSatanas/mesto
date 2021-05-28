@@ -15,7 +15,6 @@ export default class {
         if (this._data.owner._id !== "042e9b68a6fc29c7223d0553") {
             const cardElement = this._newCardElement.cloneNode(true);
             cardElement.querySelector('.card__del-button').remove();
-            //console.log(this._data)
             return cardElement;
         } else {
             const cardElement = this._newCardElement.cloneNode(true);

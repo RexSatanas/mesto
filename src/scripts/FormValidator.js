@@ -1,6 +1,6 @@
 export default class  {
     constructor(validateConfig, formElement) {
-        this._formElement = formElement
+        this._form = formElement
         this._inputSelector = validateConfig.inputSelector
         this._submitButtonSelector = validateConfig.submitButtonSelector
         this._inactiveButtonClass = validateConfig.inactiveButtonClass
@@ -10,17 +10,17 @@ export default class  {
     }
 
     _showInputError(inputElement, errorMessage)  { // показать ошибку
-        const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+        const errorElement = this._form.querySelector(`#${inputElement.id}-error`);
         inputElement.classList.add(this._inputErrorClass)
         errorElement.textContent = errorMessage
         errorElement.classList.add(this._errorClass)
     };
 
     _hideInputError(inputElement)  { // скрыть ошибку
-        const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`)
+        const errorElement = this._form.querySelector(`#${inputElement.id}-error`)
         inputElement.classList.remove(this._inputErrorClass)
         inputElement.classList.remove(this._errorClass)
-        errorElement.textContent = ''
+        errorElement.textContent = null
     }
 
     _checkInputValidity(inputElement)  { // функция проверяет корректность введеных данных
@@ -49,8 +49,8 @@ export default class  {
     }
 
     enableValidation() {
-        this._inputList = Array.from(document.querySelectorAll(this._inputSelector));
-        this._buttonElement = document.querySelector(this._submitButtonSelector);
+        this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+        this._buttonElement = this._form.querySelector(this._submitButtonSelector);
         this._toggleButtonState();
 
         this._buttonOpenPopup.forEach(button => {
@@ -70,5 +70,7 @@ export default class  {
         });
     }
 }
+
+
 
 

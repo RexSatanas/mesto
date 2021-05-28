@@ -16,14 +16,13 @@ export default class {
             })
     }
 
-    deleteCard(id) {
-        return fetch(`${this._url}/cards/${id}`, {
+    deleteCard(_id) {
+        return fetch(`${this._url}/cards/${_id}`, {
             method: 'DELETE',
             headers: this._headers
         })
             .then((res) => {
                 if (res.ok) {
-                    // console.log('карточка удалена')
                     return res.json()
                 }
                 return Promise.reject(`ERROR: ${res.statusText}`)
@@ -31,14 +30,13 @@ export default class {
     }
 
 
-    likeCard(id) {
-        return fetch(`${this._url}/cards/likes/${id}`, {
+    likeCard(_id) {
+        return fetch(`${this._url}/cards/likes/${_id}`, {
             method: 'PUT',
             headers: this._headers
         })
             .then((res) => {
                 if (res.ok) {
-                    // console.log('лайк')
                     return res.json()
                 }
                 return Promise.reject(`ERROR: ${res.statusText}`)
@@ -46,14 +44,13 @@ export default class {
     }
 
 
-    likeCardCancel(id) {
-        return fetch(`${this._url}/cards/likes/${id}`, {
+    likeCardCancel(_id) {
+        return fetch(`${this._url}/cards/likes/${_id}`, {
             method: 'DELETE',
             headers: this._headers
         })
             .then((res) => {
                 if (res.ok) {
-                    // console.log('лайк удален')
                     return res.json()
                 }
                 return Promise.reject(`ERROR: ${res.statusText}`)

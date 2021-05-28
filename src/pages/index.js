@@ -15,7 +15,7 @@ import { popupAddFoto, popupUser, popupBigImage, sectionWithCard,
 
 const popupWithImage = new PopupWithImage(popupBigImage);
 const popupWithSubmit = new PopupWithSubmit(popupSubmit)
-const userInfo = new UserInfo({ nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector });
+const userInfo = new UserInfo({nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector});
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
 const AvatarFormValidator = new FormValidator(validationConfig, avatarForm);
@@ -56,16 +56,16 @@ const createCard = (item) => {
             handleCardClick() {
                 popupWithImage.open(item.link, item.name);
             },
-            handleBasketClick(evt) {  // обр-к клика удаления карточки
-                popupWithSubmit.open();
-                buttonConfirm.addEventListener('click', () => {
-                    api.deleteCard(item._id) // удалил с сервера
-                        .then(() => {
-                            popupWithSubmit.close();
-                            this.deleteCard(evt); // удалил из DOM
-                        })
-                        .catch(err => console.log(err));
-                })
+                handleBasketClick(evt) {
+                    popupWithSubmit.open();
+                    buttonConfirm.addEventListener('click', () => {
+                        api.deleteCard(item._id) // удалил с сервера
+                            .then(() => {
+                                popupWithSubmit.close();
+                                this.deleteCard(evt); // удалил из DOM
+                            })
+                            .catch(err => console.log(err));
+                    })
                 popupWithSubmit.setEventListeners();
             },
             counterLikes() {
@@ -168,8 +168,8 @@ avatarEdit.addEventListener('click', () => {
 
 popupWithFormAdd.setEventListeners();
 popupWithFormUser.setEventListeners();
-popupWithFormAvatar.setEventListeners()
+popupWithFormAvatar.setEventListeners();
 editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
-AvatarFormValidator.enableValidation()
+AvatarFormValidator.enableValidation();
 

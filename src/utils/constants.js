@@ -24,7 +24,7 @@ const avatarForm = document.querySelector('.popup__form-avatar')
 const avatarEdit = document.querySelector('.profile__avatar-edit')
 const cardTemplate = document.querySelector('#card-template').content;
 
-const buttonConfirm = document.querySelector('.popup__submit-confirm');
+const buttonConfirm = document.querySelector('.popup__save-btn_confirm');
 //Api
 const token = 'be87e10d-5f50-49e4-a06f-5cefb6b5b607';
 const url = 'https://mesto.nomoreparties.co/v1/cohort-24';
