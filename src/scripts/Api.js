@@ -72,13 +72,13 @@ export default class {
             })
     }
 
-    saveUserInfo({ name, activity }) {
+    saveUserInfo({ name, status }) {
         return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
                 name: name,
-                about: activity
+                about: status
             })
         })
             .then(res => {

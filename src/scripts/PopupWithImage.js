@@ -7,10 +7,10 @@ export default class extends Popup {
         this._bigCaption = this._popup.querySelector('.popup__img-title');
     }
 
-    open(link, place) {
+    open(link, name) {
         super.open()
         this._bigFoto.src = link;
-        this._bigCaption.textContent =  place;
+        this._bigCaption.textContent =  name;
         this._bigFoto.alt = place;
         super.setEventListeners();
     }

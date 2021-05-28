@@ -19,6 +19,8 @@ const userInfo = new UserInfo({ nameUserSelector: nameUserSelector, statusUserSe
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
 const AvatarFormValidator = new FormValidator(validationConfig, popupAvatar);
+
+// Api
 const api = new Api({
     url: url,
     headers: {
@@ -47,6 +49,7 @@ api.getUser()
     })
     .catch(err => console.log(err))
 
+//создание карточки
 const createCard = (item) => {
     const card = new Card(item, cardTemplate,
         {
