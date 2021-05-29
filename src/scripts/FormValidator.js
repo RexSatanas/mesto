@@ -7,6 +7,8 @@ export default class  {
         this._inputErrorClass = validateConfig.inputErrorClass
         this._errorClass = validateConfig.errorClass
         this._openButton = validateConfig.openButton
+        this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+        this._buttonElement = this._form.querySelector(this._submitButtonSelector);
     }
 
     _showInputError(inputElement, errorMessage)  { // показать ошибку
@@ -48,10 +50,7 @@ export default class  {
     }
 
     enableValidation() {
-        this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
-        this._buttonElement = this._form.querySelector(this._submitButtonSelector);
         this._toggleButtonState();
-
         this._openButton.forEach(button => {
             button.addEventListener('click', () => {
                 this._inputList.forEach(inputElement => {

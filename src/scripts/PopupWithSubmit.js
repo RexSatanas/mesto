@@ -9,7 +9,7 @@ export default class extends Popup {
     open(handleConfirm) {
         super.open()
         this._handleConfirm = handleConfirm;
-        document.addEventListener('keydown', this._handleEscClose);
+        //document.addEventListener('keydown', this._handleEscClose);
     }
 
     close() {

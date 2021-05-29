@@ -4,28 +4,26 @@ export default class {
         this._headers = headers;
     }
 
+    _getResponseData = (res) => {
+        if (res.ok) {
+            return res.json()
+        }
+        return Promise.reject(`ERROR: ${res.status}`)
+    }
+
     getUser() {
         return fetch(`${this._url}/users/me`, {
             headers: this._headers
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`ERROR: ${res.statusText}`)
-            })
+            .then(this._getResponseData)
+
     }
 
     getCards() {
         return fetch(`${this._url}/cards`, {
             headers: this._headers
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`ERROR: ${res.statusText}`)
-            })
+            .then(this._getResponseData)
     }
 
     updateUserInfo({ name, status }) {
@@ -37,13 +35,7 @@ export default class {
                 about: status
             })
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                } else {
-                    return Promise.reject(`ERROR: ${res.status}`)
-                }
-            })
+            .then(this._getResponseData)
     }
 
     saveNewCard({ name, url }) {
@@ -55,13 +47,7 @@ export default class {
                 link: url
             })
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                } else {
-                    return Promise.reject(`ERROR: ${res.status}`)
-                }
-            })
+            .then(this._getResponseData)
     }
 
     newAvatar(url) {
@@ -72,13 +58,7 @@ export default class {
                 avatar: url,
             })
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                } else {
-                    return Promise.reject(`ERROR: ${res.status}`)
-                }
-            })
+            .then(this._getResponseData)
     }
 
     deleteCard(id) {
@@ -86,12 +66,7 @@ export default class {
             method: 'DELETE',
             headers: this._headers
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`Ошибка удаления карточки: ${res.statusText}`)
-            })
+            .then(this._getResponseData)
     }
 
 
@@ -100,12 +75,7 @@ export default class {
             method: 'PUT',
             headers: this._headers
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`ERROR: ${res.statusText}`)
-            })
+            .then(this._getResponseData)
     }
 
 
@@ -114,11 +84,6 @@ export default class {
             method: 'DELETE',
             headers: this._headers
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`ERROR: ${res.statusText}`)
-            })
+            .then(this._getResponseData)
     }
 }

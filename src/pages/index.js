@@ -17,7 +17,7 @@ const popupWithSubmit = new PopupWithSubmit(popupSubmit, buttonSubmit)
 const userInfo = new UserInfo({nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector});
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
-const AvatarFormValidator = new FormValidator(validationConfig, avatarForm);
+const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
 const section = new Section({
     renderer: (itemWithData) => {
         const cardElement = createCard(itemWithData);
@@ -64,7 +64,6 @@ const createCard = (dataCard) => {
                         .catch(err => console.log(err));
                 }
                 popupWithSubmit.open(handleConfirm);
-                popupWithSubmit.setEventListeners();
                 buttonSubmit.addEventListener('click', handleConfirm);
             },
             counterLikes() {
@@ -104,10 +103,10 @@ const popupWithFormAdd = new PopupWithForm({
         api.saveNewCard({ name: formValues.name, url: formValues.link })
             .then(dataCard => {
                 section.renderItems([dataCard])
-                loadingText(false, saveButton, initialText)
                 popupWithFormAdd.close();
             })
             .catch(err => console.log(err))
+            .finally(() =>  loadingText(false, saveButton, initialText))
     }
 });
 
@@ -118,10 +117,10 @@ const popupWithFormUser = new PopupWithForm({
         api.updateUserInfo({ name: formValues.name, status: formValues.status })
             .then(userData => {
                 userInfo.setUserInfo(userData.name, userData.about) // в ДОМ добавили имя и работу из ответа сервера
-                loadingText(false, saveButton, initialText)
                 popupWithFormUser.close();
             })
             .catch(err => console.log(err))
+            .finally(() => loadingText(false, saveButton, initialText))
     }
 });
 
@@ -132,10 +131,10 @@ const popupWithFormAvatar = new PopupWithForm({
         api.newAvatar(formValues.link)
             .then(res => {
                 userAvatar.src = res.avatar;
-                loadingText(false, saveButton, initialText)
                 popupWithFormAvatar.close()
             })
             .catch(err => console.log(err))
+            .finally(() => loadingText(false, saveButton, initialText))
     }
 });
 
@@ -155,7 +154,8 @@ avatarEdit.addEventListener('click', () => {
 popupWithFormAdd.setEventListeners();
 popupWithFormUser.setEventListeners();
 popupWithFormAvatar.setEventListeners();
+popupWithSubmit.setEventListeners();
 editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
-AvatarFormValidator.enableValidation();
+avatarFormValidator.enableValidation();
 
