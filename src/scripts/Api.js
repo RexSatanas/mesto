@@ -4,60 +4,6 @@ export default class {
         this._headers = headers;
     }
 
-    getCards() {
-        return fetch(`${this._url}/cards`, {
-            headers: this._headers
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`ERROR: ${res.statusText}`)
-            })
-    }
-
-    deleteCard(id) {
-        return fetch(`${this._url}/cards/${id}`, {
-            method: 'DELETE',
-            headers: this._headers
-        })
-            .then((res) => {
-                if (res.ok) {
-                    // console.log('карточка удалена')
-                    return res.json()
-                }
-                return Promise.reject(`Ошибка удаления карточки: ${res.statusText}`)
-            })
-    }
-
-
-    likeCard(id) {
-        return fetch(`${this._url}/cards/likes/${id}`, {
-            method: 'PUT',
-            headers: this._headers
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`ERROR: ${res.statusText}`)
-            })
-    }
-
-
-    likeCardCancel(id) {
-        return fetch(`${this._url}/cards/likes/${id}`, {
-            method: 'DELETE',
-            headers: this._headers
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }
-                return Promise.reject(`ERROR: ${res.statusText}`)
-            })
-    }
-
     getUser() {
         return fetch(`${this._url}/users/me`, {
             headers: this._headers
@@ -70,7 +16,19 @@ export default class {
             })
     }
 
-    saveUserInfo({ name, status }) {
+    getCards() {
+        return fetch(`${this._url}/cards`, {
+            headers: this._headers
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject(`ERROR: ${res.statusText}`)
+            })
+    }
+
+    updateUserInfo({ name, status }) {
         return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
@@ -120,6 +78,47 @@ export default class {
                 } else {
                     return Promise.reject(`ERROR: ${res.status}`)
                 }
+            })
+    }
+
+    deleteCard(id) {
+        return fetch(`${this._url}/cards/${id}`, {
+            method: 'DELETE',
+            headers: this._headers
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject(`Ошибка удаления карточки: ${res.statusText}`)
+            })
+    }
+
+
+    likeCard(id) {
+        return fetch(`${this._url}/cards/likes/${id}`, {
+            method: 'PUT',
+            headers: this._headers
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject(`ERROR: ${res.statusText}`)
+            })
+    }
+
+
+    likeCardCancel(id) {
+        return fetch(`${this._url}/cards/likes/${id}`, {
+            method: 'DELETE',
+            headers: this._headers
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json()
+                }
+                return Promise.reject(`ERROR: ${res.statusText}`)
             })
     }
 }

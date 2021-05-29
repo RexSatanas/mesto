@@ -1,12 +1,11 @@
 export default class {
-    constructor({arrayWithDataList, renderer}, containerSelector) {
-        this._arrayWithDataList = arrayWithDataList;
+    constructor({renderer}, containerSelector) {
         this._renderer = renderer;
         this._container = document.querySelector(containerSelector);
     }
 
-    renderItems() {
-        this._arrayWithDataList.forEach(itemWithData => {
+    renderItems(dataCardList) {
+        dataCardList.forEach(itemWithData => {
             this._renderer(itemWithData);
         });
     }

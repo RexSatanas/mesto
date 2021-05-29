@@ -6,7 +6,7 @@ export default class  {
         this._inactiveButtonClass = validateConfig.inactiveButtonClass
         this._inputErrorClass = validateConfig.inputErrorClass
         this._errorClass = validateConfig.errorClass
-        this._buttonOpenPopup = validateConfig.buttonOpenPopup
+        this._openButton = validateConfig.openButton
     }
 
     _showInputError(inputElement, errorMessage)  { // показать ошибку
@@ -52,7 +52,7 @@ export default class  {
         this._buttonElement = this._form.querySelector(this._submitButtonSelector);
         this._toggleButtonState();
 
-        this._buttonOpenPopup.forEach(button => {
+        this._openButton.forEach(button => {
             button.addEventListener('click', () => {
                 this._inputList.forEach(inputElement => {
                     this._hideInputError(inputElement);

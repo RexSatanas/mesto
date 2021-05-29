@@ -59,8 +59,4 @@ export default class {
         button.classList.toggle('element__like_active');
         this._counterLikes();
     }
-
-    deleteElement = (event) => {
-        event.target.closest(this._newCardSelector).remove();
-    }
 }
