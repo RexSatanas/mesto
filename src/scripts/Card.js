@@ -1,13 +1,12 @@
-import {newCardSelector, placeLikeSelector} from '../utils/constants.js'
+import {newCardSelector} from '../utils/constants.js'
 export default class {
-    constructor(data, cardTemplate, {handleCardClick, handleBasketClick, counterLikes}) {
+    constructor(data, cardTemplate, {handleCardClick, handleDelClick, counterLikes}) {
         this._data = data;
         this._cardTemplate = cardTemplate;
         this._newCardSelector = newCardSelector
-        this._placeLikeSelector = placeLikeSelector;
         this._newCardElement = this._cardTemplate.querySelector(this._newCardSelector);
         this._handleCardClick = handleCardClick;
-        this._handleBasketClick = handleBasketClick;
+        this._handleDelClick = handleDelClick;
         this._counterLikes = counterLikes;
     }
 
@@ -50,7 +49,7 @@ export default class {
         });
         if(this._placeBasketSymbol) {
             this._placeBasketSymbol.addEventListener('click', (evt) => {
-                this._handleBasketClick(evt);
+                this._handleDelClick(evt);
             });
         }
     }

@@ -7,13 +7,13 @@ import PopupWithSubmit from "../scripts/PopupWithSubmit.js";
 import UserInfo from '../scripts/UserInfo.js';
 import Api from '../scripts/Api.js'
 import './index.css';
-import {popupAddFoto, popupUser, popupBigImage, popupSubmit, popupAvatar, sectionWithCard, newCardSelector,
-    nameUserSelector, statusUserSelector, placeLikeSelector, likeCounter, clickedLike, buttonSubmit, userAvatar,
+import {popupAddFoto, popupUser, popupBigImage, popupSubmit, popupAvatar, sectionWithCard,
+    nameUserSelector, statusUserSelector, likeCounter, clickedLike, buttonSubmit, userAvatar,
     buttonEditProfile, popupFormUser, nameInput, statusInput, addButton, addForm, avatarForm, avatarEdit, cardTemplate,
     token, url, validationConfig} from '../utils/constants.js';
 
 const popupWithImage = new PopupWithImage(popupBigImage);
-const popupWithSubmit = new PopupWithSubmit(popupSubmit)
+const popupWithSubmit = new PopupWithSubmit(popupSubmit, buttonSubmit)
 const userInfo = new UserInfo({nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector});
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
@@ -48,34 +48,34 @@ api.getCards()     // рендер стартовых карточек
 
 
 //создание карточки
-const createCard = (cardInfo) => {
-    const card = new Card(cardInfo, cardTemplate,
+const createCard = (dataCard) => {
+    const card = new Card(dataCard, cardTemplate,
         {
             handleCardClick() {
-                popupWithImage.open(cardInfo.link, cardInfo.name);
+                popupWithImage.open(dataCard.link, dataCard.name);
             },
-                handleBasketClick() {
-                    const handleConfirm = () => {
-                        api.deleteCard(card._data._id)
-                            .then(() => {
-                                card._element.remove()
-                                popupWithSubmit.close();
-                            })
-                            .catch(err => console.log(err));
-                    }
-                    popupWithSubmit.open(handleConfirm);
-                    popupWithSubmit.setEventListeners();
-                    buttonSubmit.addEventListener('click', handleConfirm);
-                },
+            handleDelClick() {
+                const handleConfirm = () => {
+                    api.deleteCard(card._data._id)
+                        .then(() => {
+                            card._element.remove()
+                            popupWithSubmit.close();
+                        })
+                        .catch(err => console.log(err));
+                }
+                popupWithSubmit.open(handleConfirm);
+                popupWithSubmit.setEventListeners();
+                buttonSubmit.addEventListener('click', handleConfirm);
+            },
             counterLikes() {
                 if (cardElement.querySelector(clickedLike)) {
-                    api.likeCard(cardInfo._id)
+                    api.likeCard(dataCard._id)
                         .then(res => {
                             cardElement.querySelector(likeCounter).textContent = res.likes.length
                         })
                         .catch(err => console.log(err))
                 } else {
-                    api.likeCardCancel(cardInfo._id)
+                    api.likeCardCancel(dataCard._id)
                         .then(res => {
                             cardElement.querySelector(likeCounter).textContent = res.likes.length
                         })
@@ -88,23 +88,23 @@ const createCard = (cardInfo) => {
     return cardElement;
 }
 //Отрисовка загрузки сабмита
-function loadingText(isLoading, buttonSubmit, initialText) {
+function loadingText(isLoading, saveButton, initialText) {
     if (isLoading) {
-        buttonSubmit.textContent = 'Сохранение...'
+        saveButton.textContent = 'Сохранение...'
     } else {
-        buttonSubmit.textContent = initialText
+        saveButton.textContent = initialText
     }
 }
 
 // попапы
 const popupWithFormAdd = new PopupWithForm({
     popupSelector: popupAddFoto,
-    handleFormSubmit: (formValues, buttonSubmit, initialText) => {
-        loadingText(true, buttonSubmit, initialText)
+    handleFormSubmit: (formValues, saveButton, initialText) => {
+        loadingText(true, saveButton, initialText)
         api.saveNewCard({ name: formValues.name, url: formValues.link })
-            .then(cardData => {
-                section.renderItems([cardData])
-                loadingText(false, buttonSubmit, initialText)
+            .then(dataCard => {
+                section.renderItems([dataCard])
+                loadingText(false, saveButton, initialText)
                 popupWithFormAdd.close();
             })
             .catch(err => console.log(err))
@@ -113,12 +113,12 @@ const popupWithFormAdd = new PopupWithForm({
 
 const popupWithFormUser = new PopupWithForm({
     popupSelector: popupUser,
-    handleFormSubmit: (formValues, buttonSubmit, initialText) => {
-        loadingText(true, buttonSubmit, initialText)
+    handleFormSubmit: (formValues, saveButton, initialText) => {
+        loadingText(true, saveButton, initialText)
         api.updateUserInfo({ name: formValues.name, status: formValues.status })
             .then(userData => {
                 userInfo.setUserInfo(userData.name, userData.about) // в ДОМ добавили имя и работу из ответа сервера
-                loadingText(false, buttonSubmit, initialText)
+                loadingText(false, saveButton, initialText)
                 popupWithFormUser.close();
             })
             .catch(err => console.log(err))
@@ -127,12 +127,12 @@ const popupWithFormUser = new PopupWithForm({
 
 const popupWithFormAvatar = new PopupWithForm({
     popupSelector: popupAvatar,
-    handleFormSubmit: (formValues, buttonSubmit, initialText) => {
-        loadingText(true, buttonSubmit, initialText)
+    handleFormSubmit: (formValues, saveButton, initialText) => {
+        loadingText(true, saveButton, initialText)
         api.newAvatar(formValues.link)
             .then(res => {
                 userAvatar.src = res.avatar;
-                loadingText(false, buttonSubmit, initialText)
+                loadingText(false, saveButton, initialText)
                 popupWithFormAvatar.close()
             })
             .catch(err => console.log(err))

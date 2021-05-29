@@ -1,11 +1,10 @@
 import Popup from './Popup.js';
 
+
 export default class extends Popup {
-    constructor(popupSelector, buttonSubmit) {
+    constructor(popupSelector, saveButton) {
         super(popupSelector);
-        this._popupSelector = popupSelector;
-        this._popup = document.querySelector(this._popupSelector);
-        this._buttonSubmit = buttonSubmit;
+        this._saveButton = saveButton;
     }
     open(handleConfirm) {
         super.open()
@@ -15,7 +14,7 @@ export default class extends Popup {
 
     close() {
         super.close();
-        this._buttonSubmit.removeEventListener('click', this._handleConfirm);
+        this._saveButton.removeEventListener('click', this._handleConfirm);
     }
 }
 
