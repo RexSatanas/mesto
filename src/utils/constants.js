@@ -21,7 +21,7 @@ const statusInput = popupFormUser.querySelector('.popup__input-status');
 const addButton = document.querySelector('.profile__add-button');
 const addForm = document.querySelector('.popup__add-form');
 //изменение автара
-const avatarForm = document.querySelector('.popup__form-avatar')
+const avatarForm = document.querySelector('.popup__avatar-form')
 const avatarEdit = document.querySelector('.profile__avatar-edit')
 const cardTemplate = document.querySelector('#card-template').content;
 
