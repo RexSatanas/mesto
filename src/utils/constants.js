@@ -7,6 +7,7 @@ const sectionWithCard = '.elements';
 const newCardSelector = '.element';
 const nameUserSelector = '.profile__info-name';
 const statusUserSelector = '.profile__info-status';
+const avatarUserSelector = '.profile__avatar'
 const placeLikeSelector = '.element__like';
 const likeCounter = '.element__like-counter';
 const clickedLike = '.element__like_active';
@@ -40,6 +41,6 @@ const validationConfig = {
 }
 
 export {popupAddFoto, popupUser, popupBigImage, popupSubmit, popupAvatar, sectionWithCard, newCardSelector,
-    nameUserSelector, statusUserSelector, placeLikeSelector, likeCounter, clickedLike, buttonSubmit, userAvatar,
+    nameUserSelector, statusUserSelector, avatarUserSelector, placeLikeSelector, likeCounter, clickedLike, buttonSubmit, userAvatar,
     buttonEditProfile, popupFormUser, nameInput, statusInput, addButton, addForm, avatarForm, avatarEdit, cardTemplate,
     token, url, validationConfig}

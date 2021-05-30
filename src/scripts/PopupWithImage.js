@@ -12,6 +12,5 @@ export default class extends Popup {
         this._bigFoto.src = link;
         this._bigCaption.textContent =  name;
         this._bigFoto.alt = name;
-        super.setEventListeners();
     }
 }

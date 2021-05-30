@@ -1,6 +1,7 @@
 import {newCardSelector} from '../utils/constants.js'
 export default class {
-    constructor(data, cardTemplate, {handleCardClick, handleDelClick, counterLikes}) {
+    constructor(userID, data, cardTemplate, {handleCardClick, handleDelClick, counterLikes}) {
+        this._userID = userID;
         this._data = data;
         this._cardTemplate = cardTemplate;
         this._newCardSelector = newCardSelector
@@ -11,13 +12,12 @@ export default class {
     }
 
     _getTemplate() {
-        if (this._data.owner._id !== "042e9b68a6fc29c7223d0553") {
+        if (this._data.owner._id !== this._userID) {
             const cardElement = this._newCardElement.cloneNode(true);
             cardElement.querySelector('.card__del-button').remove();
             return cardElement;
         } else {
             const cardElement = this._newCardElement.cloneNode(true);
-
             return cardElement;
         }
     }
@@ -28,12 +28,14 @@ export default class {
         this._placeWithCaption = this._element.querySelector('.element__name');
         this._placeLikeSymbol = this._element.querySelector('.element__like');
         this._placeBasketSymbol = this._element.querySelector('.card__del-button');
+        this._counterLikeElement = this._element.querySelector('.element__like-counter');
         this._setEventListeners();
         this._placeWithImage.src = this._data.link;
         this._placeWithCaption.textContent = this._data.name;
         this._placeWithImage.alt = this._data.name;
+        this._counterLikeElement.textContent = this._data.likes.length
         this._data.likes.forEach(user => {
-            if(user._id == "042e9b68a6fc29c7223d0553") {
+            if(user._id == this._userID) {
                 this._placeLikeSymbol.classList.add('element__like_active')
             }
         });
@@ -57,5 +59,17 @@ export default class {
     _likeCard = (button) => {
         button.classList.toggle('element__like_active');
         this._counterLikes();
+    }
+
+    showLikes(likesNumber) {
+        this._counterLikeElement.textContent = likesNumber;
+    }
+
+    getCardId() {
+        return this._data._id
+    }
+
+    removeCard() {
+        this._element.remove()
     }
 }

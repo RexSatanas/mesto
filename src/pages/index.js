@@ -7,14 +7,19 @@ import PopupWithSubmit from "../scripts/PopupWithSubmit.js";
 import UserInfo from '../scripts/UserInfo.js';
 import Api from '../scripts/Api.js'
 import './index.css';
-import {popupAddFoto, popupUser, popupBigImage, popupSubmit, popupAvatar, sectionWithCard,
+import {
+    popupAddFoto, popupUser, popupBigImage, popupSubmit, popupAvatar, sectionWithCard,
     nameUserSelector, statusUserSelector, likeCounter, clickedLike, buttonSubmit, userAvatar,
     buttonEditProfile, popupFormUser, nameInput, statusInput, addButton, addForm, avatarForm, avatarEdit, cardTemplate,
-    token, url, validationConfig} from '../utils/constants.js';
+    token, url, validationConfig, avatarUserSelector
+} from '../utils/constants.js';
 
 const popupWithImage = new PopupWithImage(popupBigImage);
 const popupWithSubmit = new PopupWithSubmit(popupSubmit, buttonSubmit)
-const userInfo = new UserInfo({nameUserSelector: nameUserSelector, statusUserSelector: statusUserSelector});
+const userInfo = new UserInfo({
+    nameUserSelector: nameUserSelector,
+    statusUserSelector: statusUserSelector,
+    avatarUserSelector: avatarUserSelector});
 const addCardFormValidator = new FormValidator(validationConfig, addForm);
 const editProfileFormValidator = new FormValidator(validationConfig, popupFormUser);
 const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
@@ -34,31 +39,25 @@ const api = new Api({
     }
 });
 
-api.getUser() //получение информации о юзере
-    .then(res => {
-        userInfo.setUserInfo(res.name, res.about);
-        userAvatar.src = res.avatar;
+Promise.all([api.getUser(), api.getCards()])
+    .then(([userData, dataCardList]) => {
+        userInfo.setUserInfo(userData);
+        section.renderItems(dataCardList)
     })
     .catch(err => console.log(err))
 
-api.getCards()     // рендер стартовых карточек
-    .then(dataCardList => {
-        section.renderItems(dataCardList)
-    });
-
-
 //создание карточки
 const createCard = (dataCard) => {
-    const card = new Card(dataCard, cardTemplate,
+    const card = new Card(userInfo.getUserInfo().id, dataCard, cardTemplate,
         {
             handleCardClick() {
                 popupWithImage.open(dataCard.link, dataCard.name);
             },
             handleDelClick() {
                 const handleConfirm = () => {
-                    api.deleteCard(card._data._id)
+                    api.deleteCard(card.getCardId())
                         .then(() => {
-                            card._element.remove()
+                            card.removeCard()
                             popupWithSubmit.close();
                         })
                         .catch(err => console.log(err));
@@ -68,15 +67,15 @@ const createCard = (dataCard) => {
             },
             counterLikes() {
                 if (cardElement.querySelector(clickedLike)) {
-                    api.likeCard(dataCard._id)
+                    api.likeCard(card.getCardId())
                         .then(res => {
-                            cardElement.querySelector(likeCounter).textContent = res.likes.length
+                            card.showLikes(res.likes.length)
                         })
                         .catch(err => console.log(err))
                 } else {
                     api.likeCardCancel(dataCard._id)
                         .then(res => {
-                            cardElement.querySelector(likeCounter).textContent = res.likes.length
+                            card.showLikes(res.likes.length)
                         })
                         .catch(err => console.log(err))
                 }
@@ -86,7 +85,7 @@ const createCard = (dataCard) => {
     const cardElement = card.generateCard();
     return cardElement;
 }
-//Отрисовка загрузки сабмита
+
 function loadingText(isLoading, saveButton, initialText) {
     if (isLoading) {
         saveButton.textContent = 'Сохранение...'
@@ -101,8 +100,8 @@ const popupWithFormAdd = new PopupWithForm({
     handleFormSubmit: (formValues, saveButton, initialText) => {
         loadingText(true, saveButton, initialText)
         api.saveNewCard({ name: formValues.name, url: formValues.link })
-            .then(dataCard => {
-                section.renderItems([dataCard])
+            .then(cardData => {
+                section.renderItems([cardData]);
                 popupWithFormAdd.close();
             })
             .catch(err => console.log(err))
@@ -116,11 +115,11 @@ const popupWithFormUser = new PopupWithForm({
         loadingText(true, saveButton, initialText)
         api.updateUserInfo({ name: formValues.name, status: formValues.status })
             .then(userData => {
-                userInfo.setUserInfo(userData.name, userData.about) // в ДОМ добавили имя и работу из ответа сервера
+                userInfo.setUserInfo(userData) // в ДОМ добавили имя и работу из ответа сервера
+                loadingText(false, saveButton, initialText)
                 popupWithFormUser.close();
             })
             .catch(err => console.log(err))
-            .finally(() => loadingText(false, saveButton, initialText))
     }
 });
 
@@ -129,8 +128,8 @@ const popupWithFormAvatar = new PopupWithForm({
     handleFormSubmit: (formValues, saveButton, initialText) => {
         loadingText(true, saveButton, initialText)
         api.newAvatar(formValues.link)
-            .then(res => {
-                userAvatar.src = res.avatar;
+            .then(userData => {
+                userInfo.setUserInfo(userData);
                 popupWithFormAvatar.close()
             })
             .catch(err => console.log(err))
