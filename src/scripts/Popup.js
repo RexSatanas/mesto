@@ -16,7 +16,7 @@ export default class {
     }
 
     _handleEscClose = (evt) => {
-        if (evt.keyCode === 27) {
+        if (evt.key === "Escape") {
             this.close();
         }
     }

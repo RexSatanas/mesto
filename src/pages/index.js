@@ -42,6 +42,7 @@ const api = new Api({
 Promise.all([api.getUser(), api.getCards()])
     .then(([userData, dataCardList]) => {
         userInfo.setUserInfo(userData);
+        dataCardList.reverse()
         section.renderItems(dataCardList)
     })
     .catch(err => console.log(err))
