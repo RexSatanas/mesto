@@ -1,3 +1,4 @@
+import {KEYBOARD_KEYCODE_ESC} from '../utils/constants'
 export default class {
     constructor(popupSelector) {
         this._popup = document.querySelector(popupSelector);
@@ -16,7 +17,7 @@ export default class {
     }
 
     _handleEscClose = (evt) => {
-        if (evt.key === "Escape") {
+        if (evt.key === KEYBOARD_KEYCODE_ESC) {
             this.close();
         }
     }

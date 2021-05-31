@@ -13,6 +13,7 @@ const likeCounter = '.element__like-counter';
 const clickedLike = '.element__like_active';
 const buttonSubmit = document.querySelector('.popup__save-btn_confirm');
 const userAvatar = document.querySelector('.profile__avatar');
+const KEYBOARD_KEYCODE_ESC = 'Escape'
 //изменение профиля
 const buttonEditProfile = document.querySelector('.profile__info-edit-button');
 const popupFormUser = document.querySelector('.popup__edit-form');
@@ -43,4 +44,4 @@ const validationConfig = {
 export {popupAddFoto, popupUser, popupBigImage, popupSubmit, popupAvatar, sectionWithCard, newCardSelector,
     nameUserSelector, statusUserSelector, avatarUserSelector, placeLikeSelector, likeCounter, clickedLike, buttonSubmit, userAvatar,
     buttonEditProfile, popupFormUser, nameInput, statusInput, addButton, addForm, avatarForm, avatarEdit, cardTemplate,
-    token, url, validationConfig}
+    token, url, validationConfig, KEYBOARD_KEYCODE_ESC}
